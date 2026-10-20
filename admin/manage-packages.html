@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Packages — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html" class="active"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html"><i class="fas fa-envelope"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <div>
+        <h1><i class="fas fa-box"></i> Manage Packages</h1>
+        <p>Add, edit, and manage your package types & price multipliers</p>
+      </div>
+      <button class="add-btn" onclick="openPkgModal()">
+        <i class="fas fa-plus"></i> Add Package
+      </button>
+    </div>
+
+    <div class="pkg-grid" id="pkgGrid">
+      <div class="admin-empty"><i class="fas fa-spinner fa-spin"></i> Loading packages...</div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="pkg-modal" id="pkgModal">
+    <div class="pkg-modal-box">
+      <h3><i class="fas fa-box"></i> <span id="modalTitle">Add Package Type</span></h3>
+      <input type="hidden" id="pkgDocId">
+
+      <div class="form-row">
+        <label for="pName">Package Name <span style="color:#DC2626;">*</span></label>
+        <input type="text" id="pName" placeholder="e.g. Honeymoon, Family, Corporate" required>
+      </div>
+
+      <div class="form-row">
+        <label for="pIcon">Icon (Font Awesome Class) <span style="color:#DC2626;">*</span></label>
+        <input type="text" id="pIcon" placeholder="fas fa-heart" value="fas fa-users" required>
+        <div class="icon-quick" id="iconQuick"></div>
+        <small>Click an icon below or type a Font Awesome class (e.g. fas fa-heart)</small>
+      </div>
+
+      <div class="form-row">
+        <label for="pMultiplier">Price Multiplier <span style="color:#DC2626;">*</span></label>
+        <input type="number" id="pMultiplier" min="0.1" max="5" step="0.05" value="1.0" required>
+        <div class="mult-preview" id="multPreview"></div>
+        <small>
+          <strong>1.0</strong> = same price |
+          <strong>1.3</strong> = 30% more |
+          <strong>0.9</strong> = 10% discount
+        </small>
+      </div>
+
+      <div class="form-row">
+        <label for="pOrder">Display Order</label>
+        <input type="number" id="pOrder" min="0" value="1">
+        <small>Lower number = appears first</small>
+      </div>
+
+      <div class="form-row">
+        <label for="pActive">Status</label>
+        <select id="pActive">
+          <option value="true">✅ Active (visible on booking page)</option>
+          <option value="false">❌ Inactive (hidden)</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="closePkgModal()"><i class="fas fa-times"></i> Cancel</button>
+        <button class="btn-save" onclick="savePackage()"><i class="fas fa-save"></i> Save Package</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============ SIDEBAR ============ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+    /* ============ AUTH ============ */
+    let currentAdminEmail = "";
+    auth.onAuthStateChanged((user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      currentAdminEmail = user.email;
+      document.getElementById("userEmail").textContent = user.email;
+      loadPackages();
+    });
+
+    function logout() {
+      if (confirm("Logout?")) auth.signOut().then(() => window.location.href = "login.html");
+    }
+    window.logout = logout;
+
+    /* ============ LOAD PACKAGES ============ */
+    let allPackages = [];
+
+    async function loadPackages() {
+      const grid = document.getElementById("pkgGrid");
+      try {
+        const snap = await db.collection("packages").get();
+        allPackages = [];
+        snap.forEach(doc => allPackages.push({ id: doc.id, ...doc.data() }));
+
+        allPackages.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        if (!allPackages.length) {
+          grid.innerHTML = `<div class="admin-empty"><i class="fas fa-box"></i>No packages yet. Click "Add Package" to start.</div>`;
+          return;
+        }
+        renderPackages();
+      } catch (err) {
+        grid.innerHTML = `<div class="admin-empty" style="color:#DC2626;">Error: ${err.message}</div>`;
+      }
+    }
+
+    function getMultClass(m) {
+      if (m > 1) return 'mult-high';
+      if (m < 1) return 'mult-low';
+      return 'mult-mid';
+    }
+
+    function renderPackages() {
+      const grid = document.getElementById("pkgGrid");
+      grid.innerHTML = allPackages.map(p => {
+        const m = p.multiplier || 1;
+        const multClass = getMultClass(m);
+        const pct = m > 1 ? `+${Math.round((m - 1) * 100)}%` :
+          m < 1 ? `${Math.round((m - 1) * 100)}%` : 'Base Price';
+        return `
+          <div class="pkg-card">
+            <span class="status-badge ${p.active !== false ? 'status-active' : 'status-inactive'}">
+              ${p.active !== false ? 'Active' : 'Inactive'}
+            </span>
+            <div class="pkg-icon-big">
+              <i class="${p.icon || 'fas fa-box'}"></i>
+            </div>
+            <h4>${p.name}</h4>
+            <div class="pkg-multiplier ${multClass}">
+              <i class="fas fa-percentage"></i> ${m}x · ${pct}
+            </div>
+            <div class="pkg-meta">
+              <i class="fas fa-sort-numeric-down"></i> Order: ${p.order || 0}
+            </div>
+            <div class="pkg-actions">
+              <button class="btn-edit" onclick="editPackage('${p.id}')"><i class="fas fa-edit"></i> Edit</button>
+              <button class="btn-delete" onclick="deletePackage('${p.id}')"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ============ MODAL + ICON PICKER ============ */
+    const ICONS = [
+      { class: 'fas fa-heart', label: 'Honeymoon' },
+      { class: 'fas fa-users', label: 'Family' },
+      { class: 'fas fa-user-group', label: 'Group' },
+      { class: 'fas fa-briefcase', label: 'Corporate' },
+      { class: 'fas fa-suitcase-rolling', label: 'Solo' },
+      { class: 'fas fa-place-of-worship', label: 'Pilgrimage' },
+      { class: 'fas fa-graduation-cap', label: 'School' },
+      { class: 'fas fa-umbrella-beach', label: 'Beach' },
+      { class: 'fas fa-mountain', label: 'Hill' },
+      { class: 'fas fa-camera', label: 'Photo' },
+      { class: 'fas fa-plane', label: 'Flight' },
+      { class: 'fas fa-bus', label: 'Bus' },
+      { class: 'fas fa-route', label: 'Route' },
+      { class: 'fas fa-star', label: 'Special' },
+      { class: 'fas fa-crown', label: 'Premium' },
+      { class: 'fas fa-fire', label: 'Trending' }
+    ];
+
+    function renderIconPicker(selectedIcon = '') {
+      const wrap = document.getElementById("iconQuick");
+      wrap.innerHTML = ICONS.map(i => `
+        <button type="button" 
+          class="${selectedIcon === i.class ? 'selected' : ''}" 
+          onclick="pickIcon('${i.class}')" 
+          title="${i.label}">
+          <i class="${i.class}"></i>
+        </button>
+      `).join('');
+    }
+
+    function pickIcon(iconClass) {
+      document.getElementById("pIcon").value = iconClass;
+      renderIconPicker(iconClass);
+    }
+    window.pickIcon = pickIcon;
+
+    function updateMultPreview() {
+      const m = parseFloat(document.getElementById("pMultiplier").value) || 1;
+      const preview = document.getElementById("multPreview");
+      const baseAmount = 10000;
+      const final = Math.round(baseAmount * m);
+      const diff = final - baseAmount;
+      const sign = diff >= 0 ? '+' : '';
+      preview.innerHTML = `
+        Example: Base ₹10,000 → <strong>₹${final.toLocaleString('en-IN')}</strong>
+        (${sign}₹${Math.abs(diff).toLocaleString('en-IN')})
+      `;
+    }
+
+    function openPkgModal() {
+      document.getElementById("pkgDocId").value = "";
+      document.getElementById("pName").value = "";
+      document.getElementById("pIcon").value = "fas fa-users";
+      document.getElementById("pMultiplier").value = "1.0";
+      document.getElementById("pOrder").value = allPackages.length + 1;
+      document.getElementById("pActive").value = "true";
+      document.getElementById("modalTitle").textContent = "Add Package Type";
+      renderIconPicker("fas fa-users");
+      updateMultPreview();
+      document.getElementById("pkgModal").classList.add("open");
+    }
+
+    function editPackage(id) {
+      const p = allPackages.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById("pkgDocId").value = id;
+      document.getElementById("pName").value = p.name || "";
+      document.getElementById("pIcon").value = p.icon || "fas fa-box";
+      document.getElementById("pMultiplier").value = p.multiplier || 1;
+      document.getElementById("pOrder").value = p.order || 1;
+      document.getElementById("pActive").value = (p.active !== false).toString();
+      document.getElementById("modalTitle").textContent = "Edit Package Type";
+      renderIconPicker(p.icon || "fas fa-box");
+      updateMultPreview();
+      document.getElementById("pkgModal").classList.add("open");
+    }
+
+    function closePkgModal() {
+      document.getElementById("pkgModal").classList.remove("open");
+    }
+
+    async function savePackage() {
+      const docId = document.getElementById("pkgDocId").value;
+      const name = document.getElementById("pName").value.trim();
+      const icon = document.getElementById("pIcon").value.trim();
+      const multiplier = parseFloat(document.getElementById("pMultiplier").value);
+      const order = parseInt(document.getElementById("pOrder").value) || 1;
+      const active = document.getElementById("pActive").value === "true";
+
+      if (!name || !icon || isNaN(multiplier)) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      const data = { name, icon, multiplier, order, active, updatedAt: new Date().toISOString() };
+
+      try {
+        if (docId) {
+          await db.collection("packages").doc(docId).update(data);
+        } else {
+          data.createdAt = new Date().toISOString();
+          await db.collection("packages").add(data);
+        }
+        closePkgModal();
+        loadPackages();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    async function deletePackage(id) {
+      if (!confirm("Delete this package type?")) return;
+      try {
+        await db.collection("packages").doc(id).delete();
+        loadPackages();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    /* ============ INIT ============ */
+    document.addEventListener("DOMContentLoaded", () => {
+      renderIconPicker('fas fa-users');
+      document.getElementById("pMultiplier").addEventListener("input", updateMultPreview);
+      updateMultPreview();
+    });
+
+    window.openPkgModal = openPkgModal;
+    window.editPackage = editPackage;
+    window.closePkgModal = closePkgModal;
+    window.savePackage = savePackage;
+    window.deletePackage = deletePackage;
+
+    console.log("✅ Manage Packages loaded (with icon picker)");
+  </script>
+
+</body>
+
+</html>

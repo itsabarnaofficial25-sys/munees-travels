@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Munees Travels</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+
+  <style>
+    .password-wrapper {
+      position: relative;
+      width: 100%
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 45px
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: none;
+      padding: 0;
+      margin: 0;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1
+    }
+
+    .password-toggle:hover {
+      color: #0EA5E9
+    }
+  </style>
+</head>
+
+<body class="admin-login-body">
+  <div class="admin-login-box">
+    <div class="admin-login-logo">
+      <i class="fas fa-compass"></i>
+    </div>
+    <h1>Admin Login</h1>
+    <p class="sub">Munees Travels — Content Management</p>
+    <form id="loginForm">
+      <div class="admin-form-group" style="margin-bottom:18px;">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="admin@muneestravels.com" required autocomplete="email">
+      </div>
+      <div class="admin-form-group" style="margin-bottom:18px;">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Enter your password" required
+            autocomplete="current-password">
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="admin-login-btn" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+      </button>
+      <p id="loginError" class="admin-login-error"></p>
+    </form>
+    <a href="../index.html" class="admin-login-back">
+      <i class="fas fa-arrow-left"></i> Back to Website
+    </a>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const loginBtn = document.getElementById("loginBtn");
+    const passwordInput = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+    passwordToggle.addEventListener("click", function () {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordToggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        passwordToggle.setAttribute("aria-label", "Hide password");
+      } else {
+        passwordInput.type = "password";
+        passwordToggle.innerHTML = '<i class="fas fa-eye"></i>';
+        passwordToggle.setAttribute("aria-label", "Show password");
+      }
+    });
+    if (typeof firebase === "undefined") {
+      loginError.style.color = "#DC2626";
+      loginError.textContent = "❌ Firebase SDK could not be loaded.";
+      loginBtn.disabled = true;
+    }
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (typeof auth === "undefined") {
+        loginError.style.color = "#DC2626";
+        loginError.textContent = "❌ Firebase Authentication is not initialized.";
+        return;
+      }
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      if (!email || !password) {
+        loginError.style.color = "#DC2626";
+        loginError.textContent = "❌ Please enter email and password.";
+        return;
+      }
+      loginError.style.color = "#0EA5E9";
+      loginError.textContent = "Logging in...";
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log("Admin Login Success:", user.email);
+        console.log("User UID:", user.uid);
+        loginError.style.color = "#16A34A";
+        loginError.textContent = "✅ Login successful! Redirecting...";
+        setTimeout(function () {
+          window.location.href = "dashboard.html";
+        }, 500);
+      } catch (err) {
+        console.error("Firebase Login Error:", err);
+        loginError.style.color = "#DC2626";
+        let message = "❌ Invalid email or password.";
+        if (err.code === "auth/user-not-found") {
+          message = "❌ User not found in Firebase Authentication.";
+        } else if (err.code === "auth/wrong-password") {
+          message = "❌ Incorrect password.";
+        } else if (err.code === "auth/invalid-credential") {
+          message = "❌ Email or password is incorrect.";
+        } else if (err.code === "auth/invalid-email") {
+          message = "❌ Invalid email address.";
+        } else if (err.code === "auth/user-disabled") {
+          message = "❌ This account has been disabled.";
+        } else if (err.code === "auth/too-many-requests") {
+          message = "❌ Too many login attempts. Please try again later.";
+        } else {
+          message = "❌ " + err.message;
+        }
+        loginError.textContent = message;
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login to Dashboard';
+      }
+    });
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        console.log("Already logged in:", user.email);
+        window.location.href = "dashboard.html";
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- ✅ Common Admin CSS -->
+  <link rel="stylesheet" href="css/admin.css">
+
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+
+</head>
+
+<body>
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- BACKDROP -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html"><i class="fas fa-envelope"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Welcome back! Manage your website content here.</p>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+
+    <div class="admin-stats-grid">
+      <div class="admin-stat-card">
+        <div class="icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <h3 id="enqCount">—</h3>
+          <p>Enquiries</p>
+        </div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="icon"><i class="fas fa-calendar-check"></i></div>
+        <div>
+          <h3 id="bkgCount">—</h3>
+          <p>Bookings</p>
+        </div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="icon"><i class="fas fa-images"></i></div>
+        <div>
+          <h3 id="galCount">—</h3>
+          <p>Gallery Images</p>
+        </div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="icon"><i class="fas fa-box"></i></div>
+        <div>
+          <h3 id="pkgCount">—</h3>
+          <p>Packages</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="admin-section-title"><i class="fas fa-th-large"></i> Manage Content</h2>
+    <div class="admin-manage-grid">
+      <a href="manage-services.html" class="admin-manage-card">
+        <i class="fas fa-concierge-bell"></i>
+        <h3>Services</h3>
+        <p>Add / edit travel services</p>
+      </a>
+      <a href="manage-gallery.html" class="admin-manage-card">
+        <i class="fas fa-images"></i>
+        <h3>Gallery</h3>
+        <p>Manage photo gallery</p>
+      </a>
+      <a href="manage-packages.html" class="admin-manage-card">
+        <i class="fas fa-box"></i>
+        <h3>Packages</h3>
+        <p>Tour packages & pricing</p>
+      </a>
+      <a href="manage-testimonials.html" class="admin-manage-card">
+        <i class="fas fa-quote-right"></i>
+        <h3>Testimonials</h3>
+        <p>Customer reviews</p>
+      </a>
+      <a href="manage-bookings.html" class="admin-manage-card">
+        <i class="fas fa-calendar-check"></i>
+        <h3>Bookings</h3>
+        <p>View & manage bookings</p>
+      </a>
+      <a href="manage-enquiries.html" class="admin-manage-card">
+        <i class="fas fa-envelope"></i>
+        <h3>Enquiries</h3>
+        <p>Contact form submissions</p>
+      </a>
+    </div>
+  </main>
+
+  <!-- ============ FIREBASE SDKs ============ -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <!-- ============ ALL-INLINE JAVASCRIPT ============ -->
+  <script>
+    /* ============================================================
+       1. MOBILE SIDEBAR TOGGLE
+       ============================================================ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+    document.querySelectorAll(".admin-sidebar a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) closeSidebar();
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeSidebar();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) closeSidebar();
+    });
+
+    /* ============================================================
+       2. AUTH GUARD + USER EMAIL
+       ============================================================ */
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+      const emailEl = document.getElementById("userEmail");
+      if (emailEl) emailEl.textContent = user.email;
+      loadCounts(); // Counts load pannunga
+    });
+
+    /* ============================================================
+       3. LOGOUT
+       ============================================================ */
+    function logout() {
+      if (confirm("Logout from admin panel?")) {
+        auth.signOut()
+          .then(() => window.location.href = "login.html")
+          .catch((err) => {
+            console.error("Logout error:", err);
+            window.location.href = "login.html";
+          });
+      }
+    }
+    window.logout = logout;
+
+    /* ============================================================
+       4. LOAD DASHBOARD COUNTS
+       ============================================================ */
+    async function loadCounts() {
+      const cols = [
+        { col: "enquiries", id: "enqCount" },
+        { col: "bookings", id: "bkgCount" },
+        { col: "gallery", id: "galCount" },
+        { col: "packages", id: "pkgCount" }
+      ];
+
+      for (const c of cols) {
+        const el = document.getElementById(c.id);
+        if (!el) continue;
+
+        try {
+          const snap = await db.collection(c.col).get();
+          el.textContent = snap.size;
+        } catch (err) {
+          console.warn(`Count failed for ${c.col}:`, err.message);
+          el.textContent = "0";
+        }
+      }
+    }
+
+    console.log("✅ Dashboard inline JS loaded");
+  </script>
+</body>
+
+</html>

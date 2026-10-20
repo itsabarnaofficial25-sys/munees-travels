@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Data — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #E2E8F0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #94A3B8;
+      font-size: 14px;
+    }
+
+    .warning {
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-left: 4px solid #F59E0B;
+    }
+
+    .warning i {
+      font-size: 18px;
+      margin-top: 1px;
+    }
+
+    .card {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-head h3 {
+      font-size: 17px;
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-head h3 i {
+      color: #0EA5E9;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-vehicles {
+      background: #0EA5E9;
+      color: #fff;
+    }
+
+    .badge-destinations {
+      background: #10B981;
+      color: #fff;
+    }
+
+    .badge-packages {
+      background: #8B5CF6;
+      color: #fff;
+    }
+
+    .badge-gallery {
+      background: #F59E0B;
+      color: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 2px solid #334155;
+      background: #0F172A;
+      color: #E2E8F0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      outline: none;
+      resize: vertical;
+      line-height: 1.6;
+      transition: 0.2s;
+    }
+
+    textarea:focus {
+      border-color: #0EA5E9;
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 11px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.22s;
+      font-family: inherit;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0EA5E9, #0284C7);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      box-shadow: 0 10px 24px rgba(14, 165, 233, 0.5);
+    }
+
+    .btn-danger {
+      background: #DC2626;
+      color: #fff;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #B91C1C;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border-left: 4px solid #10B981;
+    }
+
+    .status.error {
+      background: rgba(220, 38, 38, 0.15);
+      color: #F87171;
+      border-left: 4px solid #DC2626;
+    }
+
+    .status.loading {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38BDF8;
+      border-left: 4px solid #0EA5E9;
+    }
+
+    .log {
+      background: #0F172A;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 12.5px;
+      max-height: 250px;
+      overflow-y: auto;
+      color: #94A3B8;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .log.show {
+      display: block;
+    }
+
+    .log .ok {
+      color: #34D399;
+    }
+
+    .log .err {
+      color: #F87171;
+    }
+
+    .log .info {
+      color: #38BDF8;
+    }
+
+    .help {
+      font-size: 12.5px;
+      color: #64748B;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .help code {
+      background: #0F172A;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #38BDF8;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>🚀 Firestore Setup</h1>
+      <p>Bulk import vehicles, destinations, packages & gallery</p>
+    </div>
+
+    <div class="warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div>
+        <strong>Security Warning:</strong> This page is for <strong>one-time setup only</strong>.
+        After importing data, <strong>DELETE this file</strong> from your server.
+        Otherwise anyone can access it.
+      </div>
+    </div>
+
+    <!-- VEHICLES -->
+    <div class="card">
+      <div class="card-head">
+        <h3><i class="fas fa-car"></i> Vehicles</h3>
+        <span class="badge badge-vehicles">vehicles collection</span>
+      </div>
+      <textarea id="vehiclesData">[
+  { "id": "swift-dzire", "name": "Swift Dzire", "price": 3000, "icon": "fas fa-car-side", "capacity": 4, "order": 1, "active": true },
+  { "id": "toyota-innova", "name": "Toyota Innova", "price": 4500, "icon": "fas fa-car", "capacity": 7, "order": 2, "active": true },
+  { "id": "innova-crysta", "name": "Innova Crysta", "price": 5500, "icon": "fas fa-car-side", "capacity": 7, "order": 3, "active": true },
+  { "id": "tempo-traveller", "name": "Tempo Traveller", "price": 7000, "icon": "fas fa-shuttle-van", "capacity": 12, "order": 4, "active": true },
+  { "id": "tourist-van", "name": "Tourist Van", "price": 6000, "icon": "fas fa-van-shuttle", "capacity": 10, "order": 5, "active": true },
+  { "id": "mini-bus", "name": "Mini Bus", "price": 10000, "icon": "fas fa-bus", "capacity": 21, "order": 6, "active": true }
+]</textarea>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="importData('vehicles')">
+          <i class="fas fa-upload"></i> Import Vehicles
+        </button>
+        <button class="btn btn-danger" onclick="clearCollection('vehicles')">
+          <i class="fas fa-trash"></i> Clear Collection
+        </button>
+      </div>
+      <div class="status" id="statusVehicles"></div>
+      <div class="log" id="logVehicles"></div>
+    </div>
+
+    <!-- DESTINATIONS -->
+    <div class="card">
+      <div class="card-head">
+        <h3><i class="fas fa-map-marked-alt"></i> Destinations</h3>
+        <span class="badge badge-destinations">destinations collection</span>
+      </div>
+      <textarea id="destinationsData">[
+  { "id": "ooty", "name": "Ooty", "price": 5999, "group": "🏔️ Hill Stations", "order": 1, "active": true },
+  { "id": "kodaikanal", "name": "Kodaikanal", "price": 6499, "group": "🏔️ Hill Stations", "order": 2, "active": true },
+  { "id": "munnar", "name": "Munnar", "price": 7999, "group": "🏔️ Hill Stations", "order": 3, "active": true },
+  { "id": "coorg", "name": "Coorg", "price": 6999, "group": "🏔️ Hill Stations", "order": 4, "active": true },
+  { "id": "yercaud", "name": "Yercaud", "price": 4999, "group": "🏔️ Hill Stations", "order": 5, "active": true },
+  { "id": "goa", "name": "Goa", "price": 8999, "group": "🏖️ Beaches", "order": 1, "active": true },
+  { "id": "kanyakumari", "name": "Kanyakumari", "price": 3999, "group": "🏖️ Beaches", "order": 2, "active": true },
+  { "id": "pondicherry", "name": "Pondicherry", "price": 7499, "group": "🏖️ Beaches", "order": 3, "active": true },
+  { "id": "rameswaram", "name": "Rameswaram", "price": 3999, "group": "🛕 Pilgrimage", "order": 1, "active": true },
+  { "id": "madurai", "name": "Madurai", "price": 3499, "group": "🛕 Pilgrimage", "order": 2, "active": true },
+  { "id": "tirupati", "name": "Tirupati", "price": 4999, "group": "🛕 Pilgrimage", "order": 3, "active": true },
+  { "id": "dubai", "name": "Dubai", "price": 49999, "group": "🌍 International", "order": 1, "active": true },
+  { "id": "singapore", "name": "Singapore", "price": 89999, "group": "🌍 International", "order": 2, "active": true },
+  { "id": "maldives", "name": "Maldives", "price": 129999, "group": "🌍 International", "order": 3, "active": true }
+]</textarea>
+      <p class="help">Add all destinations with <code>id</code>, <code>name</code>, <code>price</code>,
+        <code>group</code>, <code>order</code>, <code>active</code></p>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="importData('destinations')">
+          <i class="fas fa-upload"></i> Import Destinations
+        </button>
+        <button class="btn btn-danger" onclick="clearCollection('destinations')">
+          <i class="fas fa-trash"></i> Clear Collection
+        </button>
+      </div>
+      <div class="status" id="statusDestinations"></div>
+      <div class="log" id="logDestinations"></div>
+    </div>
+
+    <!-- PACKAGES -->
+    <div class="card">
+      <div class="card-head">
+        <h3><i class="fas fa-box"></i> Package Types</h3>
+        <span class="badge badge-packages">packages collection</span>
+      </div>
+      <textarea id="packagesData">[
+  { "id": "honeymoon", "name": "Honeymoon", "icon": "💑", "multiplier": 1.3, "order": 1, "active": true },
+  { "id": "family", "name": "Family", "icon": "👨‍👩‍👧", "multiplier": 1.0, "order": 2, "active": true },
+  { "id": "group", "name": "Group (5+)", "icon": "👥", "multiplier": 0.9, "order": 3, "active": true },
+  { "id": "corporate", "name": "Corporate", "icon": "🏢", "multiplier": 1.1, "order": 4, "active": true },
+  { "id": "solo", "name": "Solo", "icon": "🧳", "multiplier": 1.15, "order": 5, "active": true },
+  { "id": "pilgrimage", "name": "Pilgrimage", "icon": "🛕", "multiplier": 1.0, "order": 6, "active": true },
+  { "id": "school", "name": "School / College", "icon": "🎓", "multiplier": 0.85, "order": 7, "active": true }
+]</textarea>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="importData('packages')">
+          <i class="fas fa-upload"></i> Import Packages
+        </button>
+        <button class="btn btn-danger" onclick="clearCollection('packages')">
+          <i class="fas fa-trash"></i> Clear Collection
+        </button>
+      </div>
+      <div class="status" id="statusPackages"></div>
+      <div class="log" id="logPackages"></div>
+    </div>
+
+    <!-- ============ GALLERY IMAGES ============ -->
+    <div class="card">
+      <div class="card-head">
+        <h3><i class="fas fa-images"></i> Gallery Images</h3>
+        <span class="badge badge-gallery">Firebase Gallery</span>
+      </div>
+
+      <textarea id="galleryData" rows="12">[
+  {
+    "id": "ooty-1",
+    "title": "Ooty Hill Station",
+    "category": "mountains",
+    "img": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80",
+    "order": 1,
+    "active": true
+  },
+  {
+    "id": "goa-1",
+    "title": "Goa Beach",
+    "category": "beaches",
+    "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    "order": 2,
+    "active": true
+  },
+  {
+    "id": "rameswaram-1",
+    "title": "Rameswaram Temple",
+    "category": "heritage",
+    "img": "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80",
+    "order": 3,
+    "active": true
+  },
+  {
+    "id": "munnar-1",
+    "title": "Munnar Tea Hills",
+    "category": "mountains",
+    "img": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80",
+    "order": 4,
+    "active": true
+  },
+  {
+    "id": "group-1",
+    "title": "Family Group Tour",
+    "category": "groups",
+    "img": "https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=800&q=80",
+    "order": 5,
+    "active": true
+  }
+]</textarea>
+
+      <p class="help">
+        Manage gallery records in Firestore. Categories:
+        <code>mountains</code>, <code>beaches</code>,
+        <code>heritage</code>, <code>groups</code>.
+        Set <code>active: false</code> to hide an image,
+        if your gallery page supports active filtering.
+      </p>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="importData('gallery')">
+          <i class="fas fa-upload"></i> Import Gallery
+        </button>
+
+        <button class="btn btn-danger" onclick="clearCollection('gallery')">
+          <i class="fas fa-trash"></i> Clear Collection
+        </button>
+      </div>
+    </div>
+    <div class="status" id="statusGallery"></div>
+    <div class="log" id="logGallery"></div>
+  </div>
+
+  <!-- AUTH STATUS -->
+  <div class="card">
+    <div class="card-head">
+      <h3><i class="fas fa-shield-alt"></i> Admin Auth Status</h3>
+    </div>
+    <div id="authStatus" style="font-size:14px;color:#94A3B8;">
+      Checking auth status...
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.location.href='login.html'">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+      <button class="btn btn-primary" onclick="location.reload()">
+        <i class="fas fa-sync"></i> Refresh Page
+      </button>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============================================================
+       AUTH READY STATE
+       ============================================================ */
+    let currentUser = null;
+    let authReady = false;
+
+    // Wait for Firebase Auth to initialize
+    auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      authReady = true;
+      console.log("🔐 Auth state changed:", user ? user.email : "Not logged in");
+      updateAuthStatus();
+    });
+
+    function updateAuthStatus() {
+      const el = document.getElementById("authStatus");
+      if (!el) return;
+      if (currentUser) {
+        el.innerHTML = `<span style="color:#34D399;"><i class="fas fa-check-circle"></i> Logged in as: <strong>${currentUser.email}</strong></span>`;
+      } else {
+        el.innerHTML = `<span style="color:#F87171;"><i class="fas fa-times-circle"></i> Not logged in. <a href="login.html" style="color:#0EA5E9;">Login first</a></span>`;
+      }
+    }
+
+    /* ============================================================
+       WAIT FOR AUTH FUNCTION
+       ============================================================ */
+    async function waitForAuth() {
+      if (authReady) return currentUser;
+
+      return new Promise((resolve) => {
+        const unsub = auth.onAuthStateChanged((user) => {
+          unsub();
+          resolve(user);
+        });
+        // Fallback timeout
+        setTimeout(() => {
+          resolve(auth.currentUser);
+        }, 3000);
+      });
+    }
+
+    /* ============================================================
+       BULK IMPORT FUNCTION
+       ============================================================ */
+    async function importData(collectionName) {
+      const textarea = document.getElementById(collectionName + "Data");
+      const statusEl = document.getElementById("status" + capitalize(collectionName));
+      const logEl = document.getElementById("log" + capitalize(collectionName));
+
+      // ✅ Wait for auth to be ready
+      showStatus(statusEl, "loading", "⏳ Checking login status...");
+      const user = await waitForAuth();
+
+      if (!user) {
+        showStatus(statusEl, "error", "❌ Please login first! Click 'Go to Login' button below.");
+        return;
+      }
+
+      // Parse JSON
+      let data;
+      try {
+        data = JSON.parse(textarea.value.trim());
+        if (!Array.isArray(data)) throw new Error("Data must be a JSON array");
+      } catch (err) {
+        showStatus(statusEl, "error", "❌ Invalid JSON: " + err.message);
+        return;
+      }
+
+      if (!data.length) {
+        showStatus(statusEl, "error", "❌ No data to import.");
+        return;
+      }
+
+      showStatus(statusEl, "loading", `⏳ Importing ${data.length} items to ${collectionName}...`);
+      logEl.classList.add("show");
+      logEl.innerHTML = `<div class="info">→ Starting import to "${collectionName}" as ${user.email}...</div>`;
+
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const item of data) {
+        try {
+          const docId = item.id || db.collection(collectionName).doc().id;
+          const { id, ...dataWithoutId } = item;
+
+          await db.collection(collectionName).doc(docId).set({
+            ...dataWithoutId,
+            updatedAt: new Date().toISOString()
+          }, { merge: true });
+
+          successCount++;
+          const label = item.name || item.title || docId;
+          logEl.innerHTML += `<div class="ok">✓ ${label}</div>`;
+          logEl.scrollTop = logEl.scrollHeight;
+        } catch (err) {
+          errorCount++;
+          const label = item.name || item.title || item.id;
+          logEl.innerHTML += `<div class="err">✗ ${label}: ${err.message}</div>`;
+          logEl.scrollTop = logEl.scrollHeight;
+        }
+      }
+
+      logEl.innerHTML += `<div class="info">→ Done: ${successCount} success, ${errorCount} errors</div>`;
+
+      if (errorCount === 0) {
+        showStatus(statusEl, "success", `✅ Successfully imported ${successCount} items!`);
+      } else {
+        showStatus(statusEl, "error", `⚠️ ${successCount} imported, ${errorCount} failed. Check log.`);
+      }
+    }
+
+    /* ============================================================
+       CLEAR COLLECTION
+       ============================================================ */
+    async function clearCollection(collectionName) {
+      const statusEl = document.getElementById("status" + capitalize(collectionName));
+
+      // ✅ Wait for auth
+      showStatus(statusEl, "loading", "⏳ Checking login status...");
+      const user = await waitForAuth();
+
+      if (!user) {
+        showStatus(statusEl, "error", "❌ Please login first! Click 'Go to Login' button below.");
+        return;
+      }
+
+      if (!confirm(`Delete ALL documents in "${collectionName}"?\n\nThis cannot be undone!`)) return;
+
+      showStatus(statusEl, "loading", `⏳ Deleting all items in ${collectionName}...`);
+
+      try {
+        const snap = await db.collection(collectionName).get();
+        const batch = db.batch();
+        snap.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+
+        showStatus(statusEl, "success", `✅ Deleted ${snap.size} documents from "${collectionName}"`);
+      } catch (err) {
+        showStatus(statusEl, "error", "❌ Error: " + err.message);
+      }
+    }
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+    function showStatus(el, type, msg) {
+      el.className = "status show " + type;
+      el.textContent = msg;
+    }
+
+    function capitalize(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    /* ============================================================
+       DEBUG — Log auth state on load
+       ============================================================ */
+    console.log("✅ Setup page loaded");
+    console.log("Firebase auth type:", typeof auth);
+    console.log("Firestore db type:", typeof db);
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Vehicles — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- BACKDROP -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html" class="active"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html"><i class="fas fa-envelope"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <div>
+        <h1><i class="fas fa-car"></i> Manage Vehicles</h1>
+        <p>Add, edit, and manage your vehicle fleet & pricing</p>
+      </div>
+      <button class="add-btn" onclick="openVehicleModal()">
+        <i class="fas fa-plus"></i> Add Vehicle
+      </button>
+    </div>
+
+    <div class="vehicle-grid" id="vehicleGrid">
+      <div class="admin-empty"><i class="fas fa-spinner fa-spin"></i> Loading vehicles...</div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="vehicle-modal" id="vehicleModal">
+    <div class="vehicle-modal-box">
+      <h3><i class="fas fa-car"></i> <span id="modalTitle">Add Vehicle</span></h3>
+
+      <input type="hidden" id="vehicleDocId">
+
+      <div class="form-row">
+        <label for="vName">Vehicle Name <span style="color:#DC2626;">*</span></label>
+        <input type="text" id="vName" placeholder="e.g. Innova Crysta" required>
+      </div>
+
+      <div class="form-row">
+        <label for="vPrice">Price per Day (₹) <span style="color:#DC2626;">*</span></label>
+        <input type="number" id="vPrice" min="0" step="100" placeholder="5500" required>
+      </div>
+
+      <div class="form-row">
+        <label for="vIcon">Font Awesome Icon Class <span style="color:#DC2626;">*</span></label>
+        <input type="text" id="vIcon" placeholder="fas fa-car-side" value="fas fa-car">
+        <small style="color:#64748B;font-size:11.5px;">Example: fas fa-car, fas fa-bus, fas fa-van-shuttle</small>
+      </div>
+
+      <div class="form-row">
+        <label for="vCapacity">Capacity (Seater) <span style="color:#DC2626;">*</span></label>
+        <input type="number" id="vCapacity" min="1" placeholder="7" required>
+      </div>
+
+      <div class="form-row">
+        <label for="vOrder">Display Order</label>
+        <input type="number" id="vOrder" min="0" placeholder="1" value="1">
+      </div>
+
+      <div class="form-row">
+        <label for="vActive">Status</label>
+        <select id="vActive">
+          <option value="true">✅ Active (visible on site)</option>
+          <option value="false">❌ Inactive (hidden)</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="closeVehicleModal()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button class="btn-save" onclick="saveVehicle()">
+          <i class="fas fa-save"></i> Save Vehicle
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============ SIDEBAR ============ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+    /* ============ AUTH ============ */
+    let currentAdminEmail = "";
+    auth.onAuthStateChanged((user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      currentAdminEmail = user.email;
+      document.getElementById("userEmail").textContent = user.email;
+      loadVehicles();
+    });
+
+    function logout() {
+      if (confirm("Logout?")) auth.signOut().then(() => window.location.href = "login.html");
+    }
+    window.logout = logout;
+
+    /* ============ LOAD VEHICLES ============ */
+    let allVehicles = [];
+
+    async function loadVehicles() {
+      const grid = document.getElementById("vehicleGrid");
+      try {
+        const snap = await db.collection("vehicles").orderBy("order").get();
+        allVehicles = [];
+        snap.forEach(doc => allVehicles.push({ id: doc.id, ...doc.data() }));
+
+        if (!allVehicles.length) {
+          grid.innerHTML = `<div class="admin-empty"><i class="fas fa-car"></i>No vehicles added yet. Click "Add Vehicle" to start.</div>`;
+          return;
+        }
+
+        grid.innerHTML = allVehicles.map(v => `
+          <div class="vehicle-card">
+            <span class="status-badge ${v.active !== false ? 'status-active' : 'status-inactive'}">
+              ${v.active !== false ? 'Active' : 'Inactive'}
+            </span>
+            <div class="vehicle-icon-wrap">
+              <i class="${v.icon || 'fas fa-car'}"></i>
+            </div>
+            <h4>${v.name}</h4>
+            <div class="vehicle-price">₹${(v.price || 0).toLocaleString('en-IN')} <small>/day</small></div>
+            <div class="vehicle-capacity"><i class="fas fa-users"></i> ${v.capacity || 0} Seater</div>
+            <div class="vehicle-actions">
+              <button class="btn-edit" onclick="editVehicle('${v.id}')">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="btn-delete" onclick="deleteVehicle('${v.id}')">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = `<div class="admin-empty" style="color:#DC2626;">Error: ${err.message}</div>`;
+      }
+    }
+
+    /* ============ MODAL ============ */
+    function openVehicleModal() {
+      document.getElementById("vehicleDocId").value = "";
+      document.getElementById("vName").value = "";
+      document.getElementById("vPrice").value = "";
+      document.getElementById("vIcon").value = "fas fa-car";
+      document.getElementById("vCapacity").value = "";
+      document.getElementById("vOrder").value = allVehicles.length + 1;
+      document.getElementById("vActive").value = "true";
+      document.getElementById("modalTitle").textContent = "Add Vehicle";
+      document.getElementById("vehicleModal").classList.add("open");
+    }
+
+    function editVehicle(id) {
+      const v = allVehicles.find(x => x.id === id);
+      if (!v) return;
+      document.getElementById("vehicleDocId").value = id;
+      document.getElementById("vName").value = v.name || "";
+      document.getElementById("vPrice").value = v.price || "";
+      document.getElementById("vIcon").value = v.icon || "fas fa-car";
+      document.getElementById("vCapacity").value = v.capacity || "";
+      document.getElementById("vOrder").value = v.order || 1;
+      document.getElementById("vActive").value = (v.active !== false).toString();
+      document.getElementById("modalTitle").textContent = "Edit Vehicle";
+      document.getElementById("vehicleModal").classList.add("open");
+    }
+
+    function closeVehicleModal() {
+      document.getElementById("vehicleModal").classList.remove("open");
+    }
+
+    async function saveVehicle() {
+      const docId = document.getElementById("vehicleDocId").value;
+      const name = document.getElementById("vName").value.trim();
+      const price = parseFloat(document.getElementById("vPrice").value);
+      const icon = document.getElementById("vIcon").value.trim();
+      const capacity = parseInt(document.getElementById("vCapacity").value);
+      const order = parseInt(document.getElementById("vOrder").value) || 1;
+      const active = document.getElementById("vActive").value === "true";
+
+      if (!name || isNaN(price) || !icon || isNaN(capacity)) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      const data = { name, price, icon, capacity, order, active, updatedAt: new Date().toISOString() };
+
+      try {
+        if (docId) {
+          await db.collection("vehicles").doc(docId).update(data);
+        } else {
+          data.createdAt = new Date().toISOString();
+          await db.collection("vehicles").add(data);
+        }
+        closeVehicleModal();
+        loadVehicles();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    async function deleteVehicle(id) {
+      if (!confirm("Delete this vehicle?")) return;
+      try {
+        await db.collection("vehicles").doc(id).delete();
+        loadVehicles();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    /* ============ GLOBAL ============ */
+    window.openVehicleModal = openVehicleModal;
+    window.editVehicle = editVehicle;
+    window.closeVehicleModal = closeVehicleModal;
+    window.saveVehicle = saveVehicle;
+    window.deleteVehicle = deleteVehicle;
+  </script>
+
+</body>
+
+</html>

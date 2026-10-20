@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Services — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo.jpeg">
+
+</head>
+
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../travel-logo-design.jpg" alt="Munees Travels" onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- BACKDROP -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../travel-logo-design.jpg" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-services.html" class="active"><i class="fas fa-concierge-bell"></i> <span>Services</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+<a href="manage-destinations.html"><i class="fas fa-map-marked-alt"></i> <span>Destinations</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <h1><i class="fas fa-concierge-bell"></i> Manage Services</h1>
+      <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <!-- ADD FORM -->
+    <div class="admin-card">
+      <h3><i class="fas fa-plus-circle"></i> Add New Service</h3>
+      <form id="serviceForm">
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Service Title *</label>
+            <input type="text" id="title" required placeholder="e.g. Hill Station Tours">
+          </div>
+          <div class="admin-form-group">
+            <label>Icon (FontAwesome class) *</label>
+            <input type="text" id="icon" required placeholder="e.g. fa-solid fa-mountain">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column: 1 / -1;">
+            <label>Description *</label>
+            <textarea id="desc" required placeholder="Short description of the service..."></textarea>
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column: 1 / -1;">
+            <label>Image URL *</label>
+            <input type="url" id="img" required placeholder="https://example.com/image.jpg">
+          </div>
+        </div>
+        <button type="submit" class="admin-btn admin-btn-primary" id="submitBtn">
+          <i class="fas fa-plus"></i> Add Service
+        </button>
+        <p id="statusMsg" class="admin-status-msg"></p>
+      </form>
+    </div>
+
+    <!-- EXISTING -->
+    <h3 class="admin-section-title">Existing Services (<span id="count">0</span>)</h3>
+    <div class="admin-item-list" id="serviceList">
+      <div class="admin-empty">
+        <i class="fas fa-spinner fa-spin"></i> Loading...
+      </div>
+    </div>
+  </main>
+
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    // ============ MOBILE SIDEBAR TOGGLE ============
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+    document.querySelectorAll(".admin-sidebar a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) closeSidebar();
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeSidebar();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) closeSidebar();
+    });
+
+    // ============ AUTH GUARD + USER EMAIL ============
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+      const emailEl = document.getElementById("userEmail");
+      if (emailEl) emailEl.textContent = user.email;
+      loadServices();
+    });
+
+    // ============ LOGOUT ============
+    function logout() {
+      if (confirm("Logout from admin panel?")) {
+        auth.signOut()
+          .then(() => window.location.href = "login.html")
+          .catch(() => window.location.href = "login.html");
+      }
+    }
+    window.logout = logout;
+
+    // ============ SERVICES LOGIC ============
+    const form = document.getElementById("serviceForm");
+    const statusMsg = document.getElementById("statusMsg");
+    const submitBtn = document.getElementById("submitBtn");
+    const list = document.getElementById("serviceList");
+    const countEl = document.getElementById("count");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+
+      try {
+        await db.collection("services").add({
+          title: document.getElementById("title").value.trim(),
+          icon: document.getElementById("icon").value.trim(),
+          desc: document.getElementById("desc").value.trim(),
+          img: document.getElementById("img").value.trim(),
+          createdAt: new Date().toISOString()
+        });
+        statusMsg.style.color = "#16A34A";
+        statusMsg.textContent = "✅ Service added!";
+        form.reset();
+        loadServices();
+      } catch (err) {
+        statusMsg.style.color = "#DC2626";
+        statusMsg.textContent = "❌ " + err.message;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Service';
+      }
+    });
+
+    async function loadServices() {
+      const snap = await db.collection("services").orderBy("createdAt", "desc").get();
+      countEl.textContent = snap.size;
+
+      if (snap.empty) {
+        list.innerHTML = `<div class="admin-empty"><i class="fas fa-inbox"></i>No services yet</div>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      snap.forEach(doc => {
+        const d = doc.data();
+        list.innerHTML += `
+          <div class="admin-item">
+            <div class="admin-item-img">
+              <img src="${d.img}" alt="${d.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            </div>
+            <div class="admin-item-body">
+              <h4><i class="${d.icon}"></i> ${d.title}</h4>
+              <p>${d.desc}</p>
+              <div class="admin-item-actions">
+                <button class="admin-btn-icon delete" onclick="deleteService('${doc.id}')">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    async function deleteService(id) {
+      if (!confirm("Delete this service?")) return;
+      await db.collection("services").doc(id).delete();
+      loadServices();
+    }
+    window.deleteService = deleteService;
+
+    console.log("✅ Manage Services inline JS loaded");
+  </script>
+</body>
+
+</html>

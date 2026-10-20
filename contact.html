@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact Munees Travels | Tours & Travels in Virudhunagar</title>
+  <meta name="description"
+    content="Contact Munees Travels in Virudhunagar for tour packages, honeymoon trips, group tours and more. Call, WhatsApp or send an enquiry.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/png" href="./images/munees-travels-logo-removebg-preview.png">
+
+  <style>
+    .page-hero {
+      position: relative;
+      padding: 120px 0 110px;
+      overflow: hidden;
+      background: #0B0F14;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(3, 105, 161, 0.90) 0%, rgba(14, 165, 233, 0.72) 50%, rgba(11, 15, 20, 0.88) 100%);
+      z-index: 1;
+    }
+
+    .page-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-hero .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #BAE6FD;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-hero .eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: #fff;
+    }
+
+    .page-hero h1 {
+      font-family: "Fraunces", "Georgia", serif;
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .page-hero p {
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 580px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .enquiry-section {
+      padding: 72px 0 80px;
+      background: #F4F6F8;
+    }
+
+    .section-head {
+      margin-bottom: 40px;
+    }
+
+    .section-head .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #0EA5E9;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-family: "Fraunces", "Georgia", serif;
+      font-size: clamp(28px, 3.5vw, 38px);
+      font-weight: 700;
+      color: #0B0F14;
+    }
+
+    .enquiry-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .contact-card {
+      background: linear-gradient(160deg, #0369A1 0%, #0EA5E9 100%);
+      border-radius: 20px;
+      padding: 36px 30px;
+      color: #fff;
+      position: sticky;
+      top: 100px;
+      box-shadow: 0 18px 40px -18px rgba(3, 105, 161, 0.55);
+    }
+
+    .contact-card h3 {
+      font-family: "Fraunces", "Georgia", serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: flex-start;
+    }
+
+    .contact-row .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-row .icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #fff;
+    }
+
+    .contact-row strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      word-break: break-word;
+    }
+
+    .contact-row span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .enquiry-form {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 10px 30px -12px rgba(11, 15, 20, 0.15);
+      border: 1px solid #E7EBEF;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0B0F14;
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 12px 14px;
+      border: 1.5px solid #E7EBEF;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: "Inter", sans-serif;
+      color: #14181D;
+      background: #F4F6F8;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #0EA5E9;
+      background: #fff;
+    }
+
+    .form-group input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: "Inter", sans-serif;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-gold {
+      background: #0EA5E9;
+      color: #fff;
+    }
+
+    .btn-gold:hover {
+      background: #0369A1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(14, 165, 233, 0.5);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .mt-lg {
+      margin-top: 24px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: #5B6472;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    #formStatus {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .map-section {
+      padding: 0 0 80px;
+      background: #F4F6F8;
+    }
+
+    .map-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -12px rgba(11, 15, 20, 0.25);
+      height: 380px;
+      background: #E7EBEF;
+      position: relative;
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(0.2) contrast(1.05);
+    }
+
+    .map-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px -6px rgba(11, 15, 20, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .map-badge i {
+      color: #0EA5E9;
+      font-size: 20px;
+    }
+
+    .map-badge strong {
+      display: block;
+      font-size: 14px;
+      color: #0B0F14;
+    }
+
+    .map-badge span {
+      font-size: 12px;
+      color: #5B6472;
+    }
+
+    @media (max-width: 1024px) {
+      .enquiry-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .enquiry-form {
+        padding: 28px 22px;
+      }
+
+      .map-wrap {
+        height: 280px;
+      }
+
+      .page-hero {
+        padding: 80px 0 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="https://www.facebook.com/profile.php?id=61594789927134" class="social-btn" id="topFb"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/muneestravel/?hl=en" class="social-btn" id="topInsta"><i
+            class="fab fa-instagram"></i></a>
+        <span class="divider"></span>
+        <a href="mailto:muneestravels@gmail.com" class="top-link" id="topEmail">
+          <i class="fas fa-envelope"></i> <span>muneestravels@gmail.com</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <span class="top-info"><i class="far fa-clock"></i> Mon–Sun · 9:30 AM–7:00 PM</span>
+        <span class="divider"></span>
+        <span class="top-info" id="topLocation"><i class="fas fa-location-dot"></i> Virudhunagar, Tamil Nadu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="logo">
+        <img src="./images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="logo-img"
+          onerror="this.style.display='none'">
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="bookings.html">Booking</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-right">
+        <a href="tel:+919940882200" class="phone-pill" id="headerPhone">
+          <i class="fas fa-phone-alt"></i> <span>+91 99408 82200</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"
+          aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTACT HERO -->
+  <section class="contact-hero">
+    <div class="container contact-hero-content">
+      <div class="contact-eyebrow"><i class="fa-solid fa-paper-plane"></i> Let's Plan Your Trip</div>
+      <h1>Contact <span>Munees Travels</span></h1>
+      <p>Tell us where you'd like to go and our Virudhunagar travel experts will get back with an itinerary and a price
+        within a few hours.</p>
+      <div class="contact-hero-line"></div>
+    </div>
+  </section>
+
+  <!-- ENQUIRY -->
+  <section class="enquiry-section" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Book Your Dream Vacay Today</h2>
+      </div>
+
+      <div class="enquiry-grid">
+        <div class="contact-card">
+          <h3>Stay Connected</h3>
+
+          <div class="contact-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2.1z" />
+              </svg>
+            </div>
+            <div>
+              <strong id="cardPhone">+91 99408 82200</strong>
+              <span>Mon–Sat, 9:30 AM – 7:00 PM</span>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16v16H4z" />
+                <path d="m4 6 8 7 8-7" />
+              </svg>
+            </div>
+            <div>
+              <strong id="cardEmail">muneestravels@gmail.com</strong>
+              <span>We reply within a few hours</span>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z" />
+                <circle cx="12" cy="11" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <strong id="cardLocation">Virudhunagar, Tamil Nadu</strong>
+              <span>Near Bus Stand, 626001</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="enquiry-form" id="enquiryForm">
+          <div class="form-grid">
+            <div class="form-group"><label for="name">Name *</label><input type="text" id="name"
+                placeholder="Your full name" required></div>
+            <div class="form-group"><label for="city">City of Residence *</label><input type="text" id="city"
+                placeholder="e.g. Virudhunagar" required></div>
+            <div class="form-group"><label for="email">Email *</label><input type="email" id="email"
+                placeholder="you@email.com" required></div>
+            <div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone"
+                placeholder="+91 XXXXX XXXXX" required></div>
+            <div class="form-group"><label for="destinationTravel">Travel Destination *</label><input type="text"
+                id="destinationTravel" placeholder="e.g. Ooty, Kodaikanal" required></div>
+            <div class="form-group"><label for="travelDate">Date of Travel *</label><input type="text" id="travelDate"
+                placeholder="dd/mm/yyyy" required></div>
+            <div class="form-group"><label for="people">No. of People *</label><input type="number" id="people" min="1"
+                placeholder="2" required></div>
+            <div class="form-group">
+              <label for="vacationType">Vacation Type *</label>
+              <select id="vacationType" required>
+                <option value="">Select</option>
+                <option>Honeymoon</option>
+                <option>Family</option>
+                <option>Group</option>
+                <option>Corporate</option>
+                <option>Solo</option>
+                <option>Pilgrimage</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-gold btn-block mt-lg">
+            <i class="fas fa-paper-plane"></i> Enquire Now
+          </button>
+          <p id="formStatus"></p>
+          <p class="form-note">By submitting, you agree to be contacted by our travel experts regarding your enquiry.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="container">
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3938.834450783758!2d77.9561!3d9.5876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06cee1e1e1e1e1%3A0x1e1e1e1e1e1e1e1e!2sVirudhunagar%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-badge">
+          <i class="fas fa-map-pin"></i>
+          <div><strong>Munees Travels</strong><span id="mapLocation">Virudhunagar, Tamil Nadu</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-left">
+        <div class="icon"><i class="fab fa-whatsapp"></i></div>
+        <div>
+          <h3>Plan Your Trip on WhatsApp</h3>
+          <p>Enter your mobile number and our team will connect with you.</p>
+        </div>
+      </div>
+      <form class="newsletter-form" id="whatsappForm">
+        <input type="tel" id="userPhone" placeholder="Enter Mobile Number" maxlength="10" required>
+        <button type="submit" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Chat Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-wave"></div>
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img loading="lazy" src="images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo">
+        </div>
+        <p id="footerDesc">Munees Travels has 17+ years of experience in providing holiday packages, group tours,
+          honeymoon trips, pilgrimage tours, and comfortable travel services across Tamil Nadu and India.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/profile.php?id=61594789927134" id="footFb"><i
+              class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/muneestravel/?hl=en" id="footInsta"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/919940882200" id="footWa"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a><a href="about.html">About Us</a><a href="packages.html">Tour Packages</a>
+        <a href="gallery.html">Gallery</a><a href="bookings.html">Booking</a><a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>Our Services</h4>
+        <a href="services.html">Local Call Taxi</a>
+        <a href="services.html">Airport Transfers</a>
+        <a href="services.html">Family Trips</a>
+        <a href="services.html">Corporate Travel</a>
+        <a href="services.html">Pilgrimage Tours</a>
+        <a href="services.html">Honeymoon Packages</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <div class="contact-box"><i class="fas fa-location-dot"></i>
+          <div><strong>Office</strong>
+            <p id="footOffice">Near Bus Stand, Virudhunagar, Tamil Nadu – 626001</p>
+          </div>
+        </div>
+        <div class="contact-box"><i class="fas fa-phone"></i>
+          <div><strong>Call</strong>
+            <p id="footPhone">+91 99408 82200</p>
+          </div>
+        </div>
+        <div class="contact-box"><i class="fas fa-envelope"></i>
+          <div><strong>Email</strong>
+            <p id="footEmail">muneestravels@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-middle">
+      <div class="footer-features">
+        <h4><i class="fas fa-star"></i> Why Choose Us</h4>
+        <div class="feature-pill"><i class="fas fa-users"></i><span>10,000+ Happy Travellers</span></div>
+        <div class="feature-pill"><i class="fas fa-route"></i><span>Customized Tour Packages</span></div>
+        <div class="feature-pill"><i class="fas fa-headset"></i><span>24×7 Travel Support</span></div>
+        <div class="feature-pill"><i class="fas fa-shield-heart"></i><span>Safe & Comfortable Journey</span></div>
+      </div>
+      <div class="footer-right">
+        <div class="travel-promise">
+          <h4><i class="fas fa-earth-asia"></i> Our Travel Promise</h4>
+          <p style="color: white;">From Virudhunagar to India's top destinations, we ensure comfortable travel, quality
+            stays and memorable
+            experiences for every journey.</p>
+        </div>
+        <div class="footer-mini-grid">
+          <div class="mini-card"><i class="fas fa-clock"></i>
+            <div><strong>Working Hours</strong><span>Mon - Sat • 9:30 AM - 7:00 PM</span></div>
+          </div>
+          <div class="mini-card"><i class="fas fa-location-dot"></i>
+            <div><strong>Based In</strong><span>Virudhunagar, Tamil Nadu</span></div>
+          </div>
+        </div>
+        <a href="https://wa.me/919940882200" class="footer-whatsapp" target="_blank" id="footWaBtn">
+          <i class="fab fa-whatsapp"></i>
+          <div><strong>Book Your Trip on WhatsApp</strong><small>Instant Travel Assistance</small></div>
+        </a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div class="footer-bottom-wrap">
+        <p>© <span id="year"></span> Munees Travels. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <p>Developed By Rohil Technologies</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="back-top" aria-label="Back to Top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Enquiry form
+    const form = document.getElementById("enquiryForm");
+    const formStatus = document.getElementById("formStatus");
+
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+          name: document.getElementById("name").value.trim(),
+          city: document.getElementById("city").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          destination: document.getElementById("destinationTravel").value.trim(),
+          travelDate: document.getElementById("travelDate").value.trim(),
+          people: document.getElementById("people").value,
+          vacationType: document.getElementById("vacationType").value,
+          createdAt: new Date().toISOString(),
+          source: "contact-page"
+        };
+
+        if (!data.name || !data.email || !data.phone) {
+          formStatus.style.color = "#DC2626";
+          formStatus.textContent = "Please fill in all required fields.";
+          return;
+        }
+
+        formStatus.style.color = "#0EA5E9";
+        formStatus.textContent = "Sending your enquiry...";
+
+        try {
+          if (typeof db !== "undefined") {
+            await db.collection("enquiries").add(data);
+            formStatus.style.color = "#16A34A";
+            formStatus.textContent = "Thank you! Your enquiry has been sent. We'll get back to you soon.";
+            form.reset();
+          }
+        } catch (err) {
+          console.error(err);
+          formStatus.style.color = "#DC2626";
+          formStatus.textContent = "Something went wrong. Please try again or call us directly.";
+        }
+      });
+    }
+
+    const whatsappForm = document.getElementById("whatsappForm");
+    if (whatsappForm) {
+      whatsappForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const phone = document.getElementById("userPhone").value.trim();
+        if (!/^[6-9]\d{9}$/.test(phone)) { alert("Please enter a valid 10-digit mobile number."); return; }
+        const message = `Hello Munees Travels! My Mobile Number: ${phone}. I would like to know more about your tour packages.`;
+        window.open(`https://wa.me/919940882200?text=${encodeURIComponent(message)}`, "_blank");
+      });
+    }
+
+    const backTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => backTop.classList.toggle("show", window.scrollY > 400));
+    backTop.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- SITE CONFIG LOADER -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const contactSnap = await db.collection("siteConfig").doc("contact").get();
+        const generalSnap = await db.collection("siteConfig").doc("general").get();
+        const contact = contactSnap.exists ? contactSnap.data() : {};
+        const general = generalSnap.exists ? generalSnap.data() : {};
+
+        if (contact.contactEmail) {
+          const topEmail = document.getElementById("topEmail");
+          if (topEmail) { topEmail.href = "mailto:" + contact.contactEmail; topEmail.querySelector("span").textContent = contact.contactEmail; }
+          document.getElementById("footEmail").textContent = contact.contactEmail;
+          document.getElementById("cardEmail").textContent = contact.contactEmail;
+        }
+        if (contact.officeAddress) {
+          const topLoc = document.getElementById("topLocation");
+          if (topLoc) topLoc.innerHTML = `<i class="fas fa-location-dot"></i> ${contact.officeAddress}`;
+          document.getElementById("footOffice").textContent = contact.officeAddress;
+          document.getElementById("cardLocation").textContent = contact.officeAddress;
+          document.getElementById("mapLocation").textContent = contact.officeAddress;
+        }
+        if (contact.mobileNumber) {
+          const phonePill = document.getElementById("headerPhone");
+          if (phonePill) { phonePill.href = "tel:" + contact.mobileNumber.replace(/\s/g, ""); phonePill.querySelector("span").textContent = contact.mobileNumber; }
+          document.getElementById("footPhone").textContent = contact.mobileNumber;
+          document.getElementById("cardPhone").textContent = contact.mobileNumber;
+        }
+        if (contact.facebookUrl) { document.getElementById("topFb").href = contact.facebookUrl; document.getElementById("footFb").href = contact.facebookUrl; }
+        if (contact.instagramUrl) { document.getElementById("topInsta").href = contact.instagramUrl; document.getElementById("footInsta").href = contact.instagramUrl; }
+        if (contact.whatsappUrl) { document.getElementById("footWa").href = contact.whatsappUrl; document.getElementById("footWaBtn").href = contact.whatsappUrl; }
+        if (general.footerDesc) document.getElementById("footerDesc").textContent = general.footerDesc;
+        if (general.siteName) document.title = document.title.replace("Munees Travels", general.siteName);
+        console.log("✅ Site config loaded");
+      } catch (e) { console.warn("Site config skip:", e); }
+    });
+  </script>
+</body>
+
+</html>

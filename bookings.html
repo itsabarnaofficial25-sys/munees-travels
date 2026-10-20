@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Book Your Trip | Munees Travels | Tours & Travels Virudhunagar</title>
+  <meta name="description"
+    content="Book your tour package with Munees Travels — Ooty, Kodaikanal, Rameswaram, Munnar, Goa, Kanyakumari and more. Instant confirmation from Virudhunagar.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/png" href="./images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="https://www.facebook.com/profile.php?id=61594789927134" class="social-btn" id="topFb"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/muneestravel/?hl=en" class="social-btn" id="topInsta"><i
+            class="fab fa-instagram"></i></a>
+        <span class="divider"></span>
+        <a href="mailto:muneestravels@gmail.com" class="top-link" id="topEmail"><i class="fas fa-envelope"></i>
+          <span>muneestravels@gmail.com</span></a>
+      </div>
+      <div class="topbar-right">
+        <span class="top-info"><i class="far fa-clock"></i> Mon–Sun · 9:30 AM–7:00 PM</span>
+        <span class="divider"></span>
+        <span class="top-info" id="topLocation"><i class="fas fa-location-dot"></i> Virudhunagar, Tamil Nadu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="logo">
+        <img src="./images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="logo-img"
+          onerror="this.style.display='none'">
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="bookings.html" class="active">Booking</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-right">
+        <a href="tel:+919940882200" class="phone-pill" id="headerPhone"><i class="fas fa-phone-alt"></i> <span>+91 99408
+            82200</span></a>
+        <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="booking-hero">
+    <div class="container">
+      <div class="eyebrow">Reserve Your Spot</div>
+      <h1>Book Your <span>Dream Trip</span></h1>
+      <p>Fill in your details below and our Virudhunagar travel team will confirm your booking within a few hours —
+        <strong style="color:#BAE6FD;">no advance needed!</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- BOOKING SECTION -->
+  <section class="booking-section">
+    <div class="container">
+      <div class="booking-grid">
+
+        <form class="booking-form-card" id="bookingForm" novalidate>
+          <h3 class="form-section-title"><i class="fas fa-user"></i> Traveler Information</h3>
+          <div class="form-grid">
+            <div class="form-group"><label for="fullName">Full Name <span class="req">*</span></label><input type="text"
+                id="fullName" placeholder="Your full name" required autocomplete="name"></div>
+            <div class="form-group"><label for="mobile">Mobile Number <span class="req">*</span></label><input
+                type="tel" id="mobile" placeholder="10-digit mobile" maxlength="10" required autocomplete="tel"></div>
+            <div class="form-group"><label for="email">Email Address <span class="req">*</span></label><input
+                type="email" id="email" placeholder="you@email.com" required autocomplete="email"></div>
+            <div class="form-group"><label for="city">City of Residence <span class="req">*</span></label><input
+                type="text" id="city" placeholder="e.g. Virudhunagar" value="Virudhunagar" required></div>
+          </div>
+
+          <h3 class="form-section-title"><i class="fas fa-route"></i> Trip Details</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="destination">Destination <span class="req">*</span></label>
+              <div class="destination-wrap">
+                <input type="text" id="destination" placeholder="Type your destination — e.g. Ooty, Goa, Dubai"
+                  autocomplete="off" required>
+                <div class="destination-suggestions" id="destSuggestions"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="packageType">Package Type <span class="req">*</span></label>
+              <select id="packageType" required>
+                <option value="">Loading packages...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="travelDate">Travel Date <span class="req">*</span></label>
+              <div class="date-input-wrap"><input type="text" id="travelDate" placeholder="Select travel date" required
+                  readonly></div>
+            </div>
+            <div class="form-group">
+              <label for="returnDate">Return Date</label>
+              <div class="date-input-wrap"><input type="text" id="returnDate" placeholder="Select return date" readonly>
+              </div>
+            </div>
+            <div class="form-group"><label for="adults">Adults (12+) <span class="req">*</span></label><input
+                type="number" id="adults" min="1" value="2" required></div>
+            <div class="form-group"><label for="children">Children (below 12)</label><input type="number" id="children"
+                min="0" value="0"></div>
+          </div>
+
+          <h3 class="form-section-title"><i class="fas fa-car"></i> Select Your Vehicle</h3>
+          <div class="form-grid">
+            <div class="form-group full">
+              <div class="vehicle-pills" id="vehiclePills">
+                <div class="loading-vehicles"><i class="fas fa-spinner fa-spin"></i> Loading vehicles...</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="form-section-title"><i class="fas fa-comment"></i> Special Requests</h3>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="notes">Any special requirements?</label>
+              <textarea id="notes"
+                placeholder="e.g. wheelchair access, vegetarian meals, late check-in, pickup from Virudhunagar..."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-gold btn-block mt-lg" id="submitBtn">
+            <i class="fas fa-check-circle"></i> Confirm Booking
+          </button>
+          <p id="formStatus"></p>
+          <p class="form-note">By confirming, you agree to our terms. Our team will call you within a few hours to
+            confirm availability and payment details.</p>
+        </form>
+
+        <aside class="booking-sidebar">
+          <div class="summary-card">
+            <span class="summary-badge">Live Estimate</span>
+            <h3>Trip Summary</h3>
+            <div class="summary-row"><span>Destination</span><span id="sumDestination">—</span></div>
+            <div class="summary-row"><span>Package</span><span id="sumPackage">—</span></div>
+            <div class="summary-row"><span>Vehicle</span><span id="sumVehicle">—</span></div>
+            <div class="summary-row"><span>Travellers</span><span id="sumTravellers">2 Adults</span></div>
+            <div class="summary-total">
+              <span style="color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 600;">Estimated Total</span>
+              <strong id="sumTotal">₹0</strong>
+            </div>
+            <p
+              style="font-size:11.5px; color: rgba(255,255,255,0.6); margin-top: 12px; line-height:1.6; position: relative; z-index:1;">
+              * Final price will be confirmed by our team after checking availability.
+            </p>
+          </div>
+
+          <div class="side-card why-book">
+            <h3>Why Book With Us</h3>
+            <div class="why-list">
+              <div class="why-item"><i class="fas fa-bolt"></i>
+                <div><strong>Instant Response</strong><span>We reply within 2 hours, 7 days a week.</span></div>
+              </div>
+              <div class="why-item"><i class="fas fa-shield-heart"></i>
+                <div><strong>No Advance Needed</strong><span>Reserve your spot without paying anything now.</span></div>
+              </div>
+              <div class="why-item"><i class="fas fa-headset"></i>
+                <div><strong>24×7 Support</strong><span>Dedicated travel desk throughout your trip.</span></div>
+              </div>
+              <div class="why-item"><i class="fas fa-rotate-left"></i>
+                <div><strong>Free Cancellation</strong><span>Cancel up to 7 days before departure.</span></div>
+              </div>
+              <div class="why-item"><i class="fas fa-map-marked-alt"></i>
+                <div><strong>Local Expertise</strong><span>Trusted travel partner from Virudhunagar.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="help-card">
+            <i class="fas fa-headset"></i>
+            <h4>Need Help?</h4>
+            <p>Our travel experts are available to guide you through the booking.</p> <!-- ✅ Ithu irukka? -->
+            <div class="help-actions">
+              <a href="tel:+919940882200" id="helpPhone"><i class="fas fa-phone"></i></a>
+              <a href="https://wa.me/919940882200" class="wa" target="_blank" id="helpWa"><i
+                  class="fab fa-whatsapp"></i></a>
+              <a href="mailto:muneestravels@gmail.com" id="helpEmail"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box">
+      <div class="check-icon"><i class="fas fa-check"></i></div>
+      <h3>Booking Confirmed!</h3>
+      <p>Thank you for booking with Munees Travels. Our team will contact you within a few hours to confirm the details.
+      </p>
+      <div class="booking-id" id="modalBookingId">BK-000000</div>
+      <div class="modal-actions">
+        <a href="index.html" class="btn btn-gold"><i class="fas fa-home"></i> Back to Home</a>
+        <button class="btn btn-whatsapp" id="modalWhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp Us</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-left">
+        <div class="icon"><i class="fab fa-whatsapp"></i></div>
+        <div>
+          <h3>Plan Your Trip on WhatsApp</h3>
+          <p>Enter your mobile number and our team will connect with you.</p>
+        </div>
+      </div>
+      <form class="newsletter-form" id="whatsappForm">
+        <input type="tel" id="userPhone" placeholder="Enter Mobile Number" maxlength="10" required>
+        <button type="submit" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Chat Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-wave"></div>
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img loading="lazy" src="images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo">
+        </div>
+        <p id="footerDesc">Munees Travels has 17+ years of experience in providing holiday packages, group tours,
+          honeymoon trips, pilgrimage tours, and comfortable travel services across Tamil Nadu and India.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/profile.php?id=61594789927134" id="footFb"><i
+              class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/muneestravel/?hl=en" id="footInsta"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/919940882200" id="footWa"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a><a href="about.html">About Us</a><a href="packages.html">Tour Packages</a>
+        <a href="gallery.html">Gallery</a><a href="bookings.html">Booking</a><a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>Our Services</h4>
+        <a href="services.html">Local Call Taxi</a>
+        <a href="services.html">Airport Transfers</a>
+        <a href="services.html">Family Trips</a>
+        <a href="services.html">Corporate Travel</a>
+        <a href="services.html">Pilgrimage Tours</a>
+        <a href="services.html">Honeymoon Packages</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <div class="contact-box"><i class="fas fa-location-dot"></i>
+          <div><strong>Office</strong>
+            <p id="footOffice">Near Bus Stand, Virudhunagar, Tamil Nadu – 626001</p>
+          </div>
+        </div>
+        <div class="contact-box"><i class="fas fa-phone"></i>
+          <div><strong>Call</strong>
+            <p id="footPhone">+91 99408 82200</p>
+          </div>
+        </div>
+        <div class="contact-box"><i class="fas fa-envelope"></i>
+          <div><strong>Email</strong>
+            <p id="footEmail">muneestravels@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-middle">
+      <div class="footer-features">
+        <h4><i class="fas fa-star"></i> Why Choose Us</h4>
+        <div class="feature-pill"><i class="fas fa-users"></i><span>10,000+ Happy Travellers</span></div>
+        <div class="feature-pill"><i class="fas fa-route"></i><span>Customized Tour Packages</span></div>
+        <div class="feature-pill"><i class="fas fa-headset"></i><span>24×7 Travel Support</span></div>
+        <div class="feature-pill"><i class="fas fa-shield-heart"></i><span>Safe & Comfortable Journey</span></div>
+      </div>
+      <div class="footer-right">
+        <div class="travel-promise">
+          <h4><i class="fas fa-earth-asia"></i> Our Travel Promise</h4>
+          <p style="color: white;">From Virudhunagar to India's top destinations, we ensure comfortable travel, quality
+            stays and memorable
+            experiences for every journey.</p>
+        </div>
+        <div class="footer-mini-grid">
+          <div class="mini-card"><i class="fas fa-clock"></i>
+            <div><strong>Working Hours</strong><span>Mon - Sat • 9:30 AM - 7:00 PM</span></div>
+          </div>
+          <div class="mini-card"><i class="fas fa-location-dot"></i>
+            <div><strong>Based In</strong><span>Virudhunagar, Tamil Nadu</span></div>
+          </div>
+        </div>
+        <a href="https://wa.me/919940882200" class="footer-whatsapp" target="_blank" id="footWaBtn">
+          <i class="fab fa-whatsapp"></i>
+          <div><strong>Book Your Trip on WhatsApp</strong><small>Instant Travel Assistance</small></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div class="footer-bottom-wrap">
+        <p>© <span id="year"></span> Munees Travels. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <p>Developed By Rohil Technologies</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="back-top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let ALL_DESTINATIONS = [];
+    let ALL_VEHICLES = [];
+    let ALL_PACKAGES = [];
+    let selectedDestinationPrice = 0;
+
+    // MOBILE NAV
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+    navToggle?.addEventListener("click", () => {
+      mainNav?.classList.toggle("open");
+      navToggle?.classList.toggle("open");
+    });
+
+    // LOAD DATA
+    async function loadFirestoreData() {
+      try {
+        const destSnap = await db.collection("destinations").where("active", "==", true).get();
+        ALL_DESTINATIONS = [];
+        destSnap.forEach(doc => {
+          const d = doc.data();
+          ALL_DESTINATIONS.push({ name: d.name, price: d.price, group: d.group });
+        });
+        ALL_DESTINATIONS.sort((a, b) => a.group.localeCompare(b.group) || a.name.localeCompare(b.name));
+
+        const vehSnap = await db.collection("vehicles").where("active", "==", true).get();
+        ALL_VEHICLES = [];
+        vehSnap.forEach(doc => {
+          const v = doc.data();
+          ALL_VEHICLES.push({ name: v.name, price: v.price, icon: v.icon || 'fas fa-car', capacity: v.capacity || 4, order: v.order || 0 });
+        });
+        ALL_VEHICLES.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        const pkgSnap = await db.collection("packages").where("active", "==", true).get();
+        ALL_PACKAGES = [];
+        pkgSnap.forEach(doc => {
+          const p = doc.data();
+          ALL_PACKAGES.push({ name: p.name, icon: p.icon || 'fas fa-box', multiplier: p.multiplier || 1, order: p.order || 0 });
+        });
+        ALL_PACKAGES.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        renderVehicles();
+        renderPackages();
+        console.log("✅ Loaded:", { destinations: ALL_DESTINATIONS.length, vehicles: ALL_VEHICLES.length, packages: ALL_PACKAGES.length });
+      } catch (err) {
+        console.error("❌ Firestore load error:", err);
+        document.getElementById("vehiclePills").innerHTML = `<div class="loading-vehicles" style="color:#DC2626;">Failed to load vehicles. Please refresh.</div>`;
+      }
+    }
+
+
+    function renderVehicles() {
+      const wrap = document.getElementById("vehiclePills");
+      if (!ALL_VEHICLES.length) {
+        wrap.innerHTML = `<div class="loading-vehicles">No vehicles available.</div>`;
+        return;
+      }
+      wrap.innerHTML = ALL_VEHICLES.map((v, idx) => `
+    <input type="radio" name="vehicle" id="vehicle${idx}" 
+      value="${v.name}" 
+      data-price="${v.price}" 
+      data-capacity="${v.capacity || 4}">
+    <label for="vehicle${idx}">
+      <i class="${v.icon}"></i>
+      <span style="font-weight:700;">${v.name}</span>
+      <span style="font-size:11px;color:#64748B;font-weight:600;">
+        <i class="fas fa-users" style="font-size:10px;"></i> ${v.capacity || 4} Seater
+      </span>
+      <small>₹${v.price.toLocaleString('en-IN')}/day</small>
+    </label>
+  `).join('');
+      wrap.querySelectorAll('input[name="vehicle"]').forEach(r => r.addEventListener('change', calculatePrice));
+    }
+
+
+    function getVehicleCapacity() {
+      const sel = document.querySelector('input[name="vehicle"]:checked');
+      return sel ? (sel.dataset.capacity || 4) : 4;
+    }
+
+    function renderPackages() {
+      const select = document.getElementById("packageType");
+      if (!ALL_PACKAGES.length) { select.innerHTML = `<option value="">No packages available</option>`; return; }
+      select.innerHTML = `<option value="">Select type</option>` +
+        ALL_PACKAGES.map(p => `<option value="${p.name}" data-mult="${p.multiplier}" data-icon="${p.icon}">${p.name}</option>`).join('');
+      select.addEventListener('change', calculatePrice);
+    }
+
+    // DESTINATION AUTOCOMPLETE
+    const destInput = document.getElementById("destination");
+    const destSuggestions = document.getElementById("destSuggestions");
+
+    function showDestSuggestions(query = "") {
+      if (!ALL_DESTINATIONS.length) {
+        destSuggestions.innerHTML = `<div class="dest-empty"><i class="fas fa-spinner fa-spin"></i> Loading destinations...</div>`;
+        destSuggestions.classList.add("open");
+        return;
+      }
+      const q = query.toLowerCase().trim();
+      const filtered = q ? ALL_DESTINATIONS.filter(d => d.name.toLowerCase().includes(q)) : ALL_DESTINATIONS;
+
+      if (!filtered.length) {
+        destSuggestions.innerHTML = `
+          <div class="dest-empty"><i class="fas fa-search" style="opacity:0.4;margin-bottom:8px;display:block;font-size:20px;"></i>No matching destination found</div>
+          <div class="dest-custom" data-custom="${query.replace(/"/g, '&quot;')}"><i class="fas fa-plus-circle"></i> Use "${query}" as custom destination</div>`;
+        destSuggestions.classList.add("open");
+        return;
+      }
+
+      const groups = {};
+      filtered.forEach(d => { if (!groups[d.group]) groups[d.group] = []; groups[d.group].push(d); });
+
+      let html = "";
+      Object.entries(groups).forEach(([group, items]) => {
+        html += `<span class="dest-group-label">${group}</span>`;
+        items.forEach(d => {
+          html += `<div class="dest-item" data-name="${d.name}" data-price="${d.price}"><span class="name"><i class="fas fa-map-pin"></i> ${d.name}</span><span class="price-hint">₹${d.price.toLocaleString('en-IN')}+</span></div>`;
+        });
+      });
+
+      if (q && !filtered.some(d => d.name.toLowerCase() === q)) {
+        html += `<div class="dest-custom" data-custom="${query.replace(/"/g, '&quot;')}"><i class="fas fa-plus-circle"></i> Use "${query}" as custom destination</div>`;
+      }
+
+      destSuggestions.innerHTML = html;
+      destSuggestions.classList.add("open");
+    }
+
+    function hideDestSuggestions() { destSuggestions.classList.remove("open"); }
+
+    destInput.addEventListener("input", (e) => { selectedDestinationPrice = 0; showDestSuggestions(e.target.value); });
+    destInput.addEventListener("focus", () => showDestSuggestions(destInput.value));
+
+    destSuggestions.addEventListener("click", (e) => {
+      const item = e.target.closest(".dest-item");
+      const custom = e.target.closest(".dest-custom");
+
+      if (item) {
+        destInput.value = item.dataset.name;
+        selectedDestinationPrice = parseFloat(item.dataset.price) || 0;
+        destInput.dataset.isCustom = "false";
+        destInput.style.borderColor = "";   // Reset border
+        hideDestSuggestions();
+        calculatePrice();
+      } else if (custom) {
+        destInput.value = custom.dataset.custom;
+        selectedDestinationPrice = 0;
+        destInput.dataset.isCustom = "true";
+        destInput.style.borderColor = "#F59E0B";   // Orange border for custom
+        hideDestSuggestions();
+        calculatePrice();
+      }
+    });
+
+    document.addEventListener("click", (e) => { if (!e.target.closest(".destination-wrap")) hideDestSuggestions(); });
+    destInput.addEventListener("keydown", (e) => { if (e.key === "Escape") hideDestSuggestions(); });
+
+    // PRICE CALC
+    const form = document.getElementById("bookingForm");
+    const packageType = document.getElementById("packageType");
+    const adults = document.getElementById("adults");
+    const children = document.getElementById("children");
+
+    function getVehiclePrice() { const sel = document.querySelector('input[name="vehicle"]:checked'); return sel ? parseFloat(sel.dataset.price) : 0; }
+    function getVehicleName() { const sel = document.querySelector('input[name="vehicle"]:checked'); return sel ? sel.value : '—'; }
+
+    function calculatePrice() {
+      const basePrice = selectedDestinationPrice;
+      const pkgOpt = packageType.options[packageType.selectedIndex];
+      const pkgMult = parseFloat(pkgOpt?.dataset?.mult) || 1;
+      const pkgIcon = pkgOpt?.dataset?.icon || '';
+      const adultsCount = parseInt(adults.value) || 0;
+      const childrenCount = parseInt(children.value) || 0;
+      const totalTravellers = adultsCount + (childrenCount * 0.6);
+      const vehiclePrice = getVehiclePrice();
+      const destName = destInput.value.trim() || '—';
+      const pkgName = packageType.value || '—';
+      const vehicleName = getVehicleName();
+      const vehicleCapacity = getVehicleCapacity();   // ✅ Only ONE declaration
+      const isCustom = destInput.dataset.isCustom === "true";
+
+      let total = 0;
+      if (basePrice > 0 && adultsCount > 0) total = (basePrice * pkgMult * totalTravellers) + vehiclePrice;
+      else if (basePrice > 0) total = (basePrice * pkgMult) + vehiclePrice;
+      else total = vehiclePrice;
+
+      // ✅ Vehicle with capacity — ONLY ONCE
+      document.getElementById('sumVehicle').innerHTML = vehicleName !== '—'
+        ? `${vehicleName} <span style="font-size:11px;color:#94A3B8;">• ${vehicleCapacity} Seater</span>`
+        : '—';
+
+      // ✅ Destination with CUSTOM badge
+      document.getElementById('sumDestination').innerHTML = isCustom
+        ? `${destName} <span style="font-size:10px;background:#FEF3C7;color:#92400E;padding:2px 6px;border-radius:4px;font-weight:700;margin-left:4px;">CUSTOM</span>`
+        : destName;
+
+      // ✅ Package
+      document.getElementById('sumPackage').innerHTML = pkgIcon
+        ? `<i class="${pkgIcon}"></i> ${pkgName}`
+        : pkgName;
+
+      // ✅ Travellers
+      document.getElementById('sumTravellers').textContent =
+        `${adultsCount} Adult${adultsCount !== 1 ? 's' : ''}` +
+        (childrenCount > 0 ? ` + ${childrenCount} Child${childrenCount !== 1 ? 'ren' : ''}` : '');
+
+      // ✅ Total
+      document.getElementById('sumTotal').textContent = '₹' + Math.round(total).toLocaleString('en-IN');
+    }
+
+    [adults, children].forEach(el => { el.addEventListener('change', calculatePrice); el.addEventListener('input', calculatePrice); });
+
+
+    // FORM SUBMIT
+    const formStatus = document.getElementById("formStatus");
+    const submitBtn = document.getElementById("submitBtn");
+    const successModal = document.getElementById("successModal");
+    const modalBookingId = document.getElementById("modalBookingId");
+    const modalWhatsApp = document.getElementById("modalWhatsApp");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!destInput.value.trim()) { formStatus.style.color = "#DC2626"; formStatus.textContent = "Please enter a destination."; destInput.focus(); return; }
+      const mobile = document.getElementById("mobile").value.trim();
+      if (!/^[6-9]\d{9}$/.test(mobile)) { formStatus.style.color = "#DC2626"; formStatus.textContent = "Please enter a valid 10-digit mobile number."; return; }
+
+      const vehicleName = getVehicleName();
+      const isCustomDest = destInput.dataset.isCustom === "true";   // ✅ ADDED
+
+      const vehicleCapacity = getVehicleCapacity();   // ✅ MOVE HERE — before bookingData
+
+      const bookingData = {
+        fullName: document.getElementById("fullName").value.trim(),
+        mobile: mobile,
+        email: document.getElementById("email").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        destination: destInput.value.trim(),
+        isCustomDestination: isCustomDest,
+        packageType: packageType.value,
+        travelDate: document.getElementById("travelDate").value,
+        returnDate: document.getElementById("returnDate").value,
+        adults: parseInt(adults.value) || 0,
+        children: parseInt(children.value) || 0,
+        vehicle: vehicleName,
+        vehicleCapacity: vehicleCapacity,   // ✅ NOW CORRECT
+        notes: document.getElementById("notes").value.trim(),
+        estimatedTotal: document.getElementById("sumTotal").textContent,
+        status: "pending",
+        createdAt: new Date().toISOString(),
+        source: "booking-page"
+      };
+      const bookingId = "BK-" + Date.now().toString().slice(-6);
+      bookingData.bookingId = bookingId;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming...';
+      formStatus.style.color = "#0EA5E9";
+      formStatus.textContent = "Processing your booking...";
+
+      try {
+        await db.collection("bookings").add(bookingData);
+        formStatus.style.color = "#16A34A";
+        formStatus.textContent = "Booking confirmed! Check your email.";
+        modalBookingId.textContent = bookingId;
+        successModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+
+        modalWhatsApp.onclick = () => {
+          const msg = `Hello Munees Travels!%0A%0A*New Booking*%0ABooking ID: ${bookingId}%0A%0AName: ${bookingData.fullName}%0AMobile: ${bookingData.mobile}%0AEmail: ${bookingData.email}%0ACity: ${bookingData.city}%0A%0A*Trip Details*%0ADestination: ${bookingData.destination}%0APackage: ${bookingData.packageType}%0ATravel Date: ${bookingData.travelDate}%0AReturn Date: ${bookingData.returnDate || 'N/A'}%0ATravellers: ${bookingData.adults} Adults, ${bookingData.children} Children%0AVehicle: ${bookingData.vehicle}%0A%0A*Estimated Total:* ${bookingData.estimatedTotal}%0A%0ANotes: ${bookingData.notes || 'N/A'}`;
+          window.open(`https://wa.me/919940882200?text=${msg}`, "_blank");
+        };
+        form.reset();
+        document.getElementById("city").value = "Virudhunagar";
+        selectedDestinationPrice = 0;
+        destInput.value = "";
+        destInput.dataset.isCustom = "false";
+        destInput.style.borderColor = "";
+        if (travelPicker) travelPicker.clear();
+        if (returnPicker) returnPicker.clear();
+        calculatePrice();
+      } catch (err) {
+        console.error(err);
+        formStatus.style.color = "#DC2626";
+        formStatus.textContent = "Something went wrong. Please try again or call us.";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking';
+      }
+    });
+
+    successModal.addEventListener("click", (e) => { if (e.target === successModal) { successModal.classList.remove("open"); document.body.style.overflow = ""; } });
+
+    // WHATSAPP FORM
+    const whatsappForm = document.getElementById("whatsappForm");
+    if (whatsappForm) {
+      whatsappForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const phone = document.getElementById("userPhone").value.trim();
+        if (!/^[6-9]\d{9}$/.test(phone)) { alert("Please enter a valid 10-digit mobile number."); return; }
+        const message = `Hello Munees Travels! My Mobile Number: ${phone}. I would like to know more about your tour packages.`;
+        window.open(`https://wa.me/919940882200?text=${encodeURIComponent(message)}`, "_blank");
+      });
+    }
+
+    // BACK TO TOP
+    const backTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => { backTop.classList.toggle("show", window.scrollY > 400); });
+    backTop.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // FLATPICKR
+    const travelPicker = flatpickr("#travelDate", {
+      dateFormat: "d M Y", minDate: "today", disableMobile: true, allowInput: false,
+      onChange: function (selectedDates) {
+        if (selectedDates.length) {
+          const nextDay = new Date(selectedDates[0]);
+          nextDay.setDate(nextDay.getDate() + 1);
+          returnPicker.set("minDate", nextDay);
+        }
+      }
+    });
+
+    const returnPicker = flatpickr("#returnDate", {
+      dateFormat: "d M Y", minDate: "today", disableMobile: true, allowInput: false
+    });
+
+    // INITIAL LOAD
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFirestoreData().then(() => calculatePrice());
+    });
+
+    /* ============ SITE CONFIG LOADER ============ */
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const contactSnap = await db.collection("siteConfig").doc("contact").get();
+        const generalSnap = await db.collection("siteConfig").doc("general").get();
+
+        const contact = contactSnap.exists ? contactSnap.data() : {};
+        const general = generalSnap.exists ? generalSnap.data() : {};
+
+        if (contact.contactEmail) {
+          const topEmail = document.getElementById("topEmail");
+          if (topEmail) { topEmail.href = "mailto:" + contact.contactEmail; topEmail.querySelector("span").textContent = contact.contactEmail; }
+          const footEmail = document.getElementById("footEmail");
+          if (footEmail) footEmail.textContent = contact.contactEmail;
+          const helpEmail = document.getElementById("helpEmail");
+          if (helpEmail) helpEmail.href = "mailto:" + contact.contactEmail;
+        }
+
+        if (contact.officeAddress) {
+          const topLoc = document.getElementById("topLocation");
+          if (topLoc) topLoc.innerHTML = `<i class="fas fa-location-dot"></i> ${contact.officeAddress}`;
+          const footOffice = document.getElementById("footOffice");
+          if (footOffice) footOffice.textContent = contact.officeAddress;
+        }
+
+        if (contact.mobileNumber) {
+          const phonePill = document.getElementById("headerPhone");
+          if (phonePill) { phonePill.href = "tel:" + contact.mobileNumber.replace(/\s/g, ""); phonePill.querySelector("span").textContent = contact.mobileNumber; }
+          const footPhone = document.getElementById("footPhone");
+          if (footPhone) footPhone.textContent = contact.mobileNumber;
+          const helpPhone = document.getElementById("helpPhone");
+          if (helpPhone) helpPhone.href = "tel:" + contact.mobileNumber.replace(/\s/g, "");
+        }
+
+        if (contact.whatsappUrl || contact.whatsappNumber) {
+          const waUrl = contact.whatsappUrl || ("https://wa.me/" + (contact.whatsappNumber || "").replace(/\D/g, ""));
+          const helpWa = document.getElementById("helpWa");
+          if (helpWa) helpWa.href = waUrl;
+          document.getElementById("footWa")?.setAttribute("href", waUrl);
+          document.getElementById("footWaBtn")?.setAttribute("href", waUrl);
+        }
+
+        if (contact.facebookUrl) {
+          document.getElementById("topFb")?.setAttribute("href", contact.facebookUrl);
+          document.getElementById("footFb")?.setAttribute("href", contact.facebookUrl);
+        }
+        if (contact.instagramUrl) {
+          document.getElementById("topInsta")?.setAttribute("href", contact.instagramUrl);
+          document.getElementById("footInsta")?.setAttribute("href", contact.instagramUrl);
+        }
+
+        if (general.footerDesc) {
+          const fd = document.getElementById("footerDesc");
+          if (fd) fd.textContent = general.footerDesc;
+        }
+        if (general.siteName) {
+          document.title = document.title.replace("Munees Travels", general.siteName);
+        }
+
+        console.log("✅ Site config loaded");
+      } catch (e) { console.warn("Site config skip:", e); }
+    });
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Gallery — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- BACKDROP -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html" class="active"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html"><i class="fas fa-envelope"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <h1><i class="fas fa-images"></i> Manage Gallery</h1>
+      <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <!-- ADD / EDIT FORM -->
+    <div class="admin-card">
+      <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Add Gallery Image</h3>
+
+      <div class="edit-mode-banner" id="editBanner">
+        <i class="fas fa-pen"></i>
+        <span>Editing mode — updating existing image</span>
+        <button onclick="cancelEdit()">Cancel Edit</button>
+      </div>
+
+      <form id="galleryForm">
+        <input type="hidden" id="docId">
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Image Title *</label>
+            <input type="text" id="title" required placeholder="e.g. Ooty Hills">
+          </div>
+          <div class="admin-form-group">
+            <label>Category *</label>
+            <select id="category" required>
+              <option value="">Select category</option>
+              <option value="beaches">Beaches</option>
+              <option value="mountains">Mountains</option>
+              <option value="heritage">Heritage</option>
+              <option value="groups">Group Tours</option>
+              <option value="pilgrimage">Pilgrimage</option>
+              <option value="honeymoon">Honeymoon</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column:1/-1;">
+            <label>Image URL *</label>
+            <input type="url" id="img" required placeholder="https://example.com/image.jpg" oninput="updatePreview()">
+            <div class="img-preview-box" id="imgPreview">
+              <img id="previewImg" src="" alt="Preview"
+                onerror="this.src='https://via.placeholder.com/90x90?text=Invalid'">
+              <div class="preview-info">
+                <strong>Preview</strong><br>
+                Paste any image URL — you'll see a preview here.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="admin-btn admin-btn-primary" id="submitBtn">
+          <i class="fas fa-plus"></i> Add Image
+        </button>
+        <p id="statusMsg" class="admin-status-msg"></p>
+      </form>
+    </div>
+
+    <h3 class="admin-section-title">Gallery Images (<span id="count">0</span>)</h3>
+    <div class="admin-image-grid" id="galleryList">
+      <div class="admin-empty"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+  </main>
+
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============ SIDEBAR TOGGLE ============ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+    document.querySelectorAll(".admin-sidebar a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) closeSidebar();
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeSidebar();
+    });
+
+    /* ============ AUTH GUARD ============ */
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+      const emailEl = document.getElementById("userEmail");
+      if (emailEl) emailEl.textContent = user.email;
+      loadGallery();
+    });
+
+    /* ============ LOGOUT ============ */
+    function logout() {
+      if (confirm("Logout from admin panel?")) {
+        auth.signOut()
+          .then(() => window.location.href = "login.html")
+          .catch(() => window.location.href = "login.html");
+      }
+    }
+    window.logout = logout;
+
+    /* ============ STATE ============ */
+    const form = document.getElementById("galleryForm");
+    const statusMsg = document.getElementById("statusMsg");
+    const submitBtn = document.getElementById("submitBtn");
+    const list = document.getElementById("galleryList");
+    const countEl = document.getElementById("count");
+    let allImages = [];
+
+    /* ============ PREVIEW ============ */
+    function updatePreview() {
+      const url = document.getElementById("img").value.trim();
+      const box = document.getElementById("imgPreview");
+      const img = document.getElementById("previewImg");
+      if (url) {
+        img.src = url;
+        box.classList.add("show");
+      } else {
+        box.classList.remove("show");
+      }
+    }
+    window.updatePreview = updatePreview;
+
+    /* ============ FORM SUBMIT (ADD / UPDATE) ============ */
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      const editingId = document.getElementById("docId").value;
+      submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${editingId ? 'Updating' : 'Adding'}...`;
+      statusMsg.textContent = "";
+
+      try {
+        const now = new Date().toISOString();
+        const data = {
+          title: document.getElementById("title").value.trim(),
+          category: document.getElementById("category").value,
+          img: document.getElementById("img").value.trim(),
+          updatedAt: now
+        };
+
+        if (editingId) {
+          // ✅ UPDATE
+          await db.collection("gallery").doc(editingId).update(data);
+          statusMsg.style.color = "#16A34A";
+          statusMsg.textContent = "✅ Image updated!";
+        } else {
+          // ✅ ADD NEW
+          data.order = Date.now();
+          data.active = true;
+          data.createdAt = now;
+          await db.collection("gallery").add(data);
+          statusMsg.style.color = "#16A34A";
+          statusMsg.textContent = "✅ Image added!";
+        }
+
+        resetForm();
+        loadGallery();
+      } catch (err) {
+        statusMsg.style.color = "#DC2626";
+        statusMsg.textContent = "❌ " + err.message;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    /* ============ RESET FORM ============ */
+    function resetForm() {
+      form.reset();
+      document.getElementById("docId").value = "";
+      document.getElementById("imgPreview").classList.remove("show");
+      document.getElementById("formTitle").innerHTML = '<i class="fas fa-plus-circle"></i> Add Gallery Image';
+      document.getElementById("editBanner").classList.remove("show");
+      submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Image';
+    }
+
+    function cancelEdit() {
+      resetForm();
+      statusMsg.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    window.cancelEdit = cancelEdit;
+
+    /* ============ LOAD GALLERY ============ */
+    async function loadGallery() {
+      try {
+        const snap = await db.collection("gallery").get();
+        allImages = [];
+        snap.forEach(doc => allImages.push({ id: doc.id, ...doc.data() }));
+        allImages.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        countEl.textContent = allImages.length;
+
+        if (!allImages.length) {
+          list.innerHTML = `<div class="admin-empty" style="grid-column:1/-1;"><i class="fas fa-inbox"></i>No images yet</div>`;
+          return;
+        }
+
+        list.innerHTML = allImages.map(d => `
+          <div class="admin-image-item">
+            <div class="item-actions">
+              <button class="edit-btn" onclick="editImage('${d.id}')" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="del-btn" onclick="del('${d.id}')" title="Delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <img src="${d.img}" alt="${d.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            <div class="info">
+              <h4>${d.title}</h4>
+              <span>${d.category}</span>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.error("Gallery load error:", err);
+        list.innerHTML = `<div class="admin-empty" style="grid-column:1/-1;color:#DC2626;">
+          <i class="fas fa-exclamation-triangle"></i> Error: ${err.message}
+        </div>`;
+      }
+    }
+
+    /* ============ EDIT IMAGE ============ */
+    function editImage(id) {
+      const img = allImages.find(x => x.id === id);
+      if (!img) return;
+
+      document.getElementById("docId").value = id;
+      document.getElementById("title").value = img.title || "";
+      document.getElementById("category").value = img.category || "";
+      document.getElementById("img").value = img.img || "";
+
+      updatePreview();
+
+      document.getElementById("formTitle").innerHTML = '<i class="fas fa-pen"></i> Edit Gallery Image';
+      document.getElementById("editBanner").classList.add("show");
+      submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Image';
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    window.editImage = editImage;
+
+    /* ============ DELETE ============ */
+    async function del(id) {
+      if (!confirm("Delete this image?")) return;
+      try {
+        await db.collection("gallery").doc(id).delete();
+        loadGallery();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+    window.del = del;
+
+    console.log("✅ Manage Gallery loaded (with edit)");
+  </script>
+</body>
+
+</html>

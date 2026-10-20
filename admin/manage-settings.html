@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html" class="active"><i class="fas fa-cog"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <div>
+        <h1><i class="fas fa-cog"></i> Settings</h1>
+        <p>Manage admin account & website contact details</p>
+      </div>
+      <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <!-- SECTION 1: ADMIN ACCOUNT -->
+    <div class="admin-card">
+      <h3><i class="fas fa-user-shield"></i> Admin Account</h3>
+
+      <div class="settings-info"
+        style="background:#F0F9FF;padding:14px 16px;border-radius:10px;border:1px solid #BAE6FD;margin-bottom:20px;font-size:13px;color:#0369A1;">
+        <i class="fas fa-info-circle"></i> Current Admin Email: <strong id="currentEmail">—</strong>
+      </div>
+
+      <!-- Change Email -->
+      <div class="settings-block">
+        <h4
+          style="font-size:14px;font-weight:700;color:#0B0F14;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-envelope" style="color:#0EA5E9;"></i> Change Email Address
+        </h4>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column:1/-1;">
+            <label>New Email Address *</label>
+            <input type="email" id="newEmail" placeholder="newadmin@muneestravels.com">
+          </div>
+        </div>
+        <button class="admin-btn admin-btn-primary" onclick="changeEmail()" id="emailBtn">
+          <i class="fas fa-save"></i> Update Email
+        </button>
+        <p id="emailStatus" class="admin-status-msg"></p>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #E7EBEF;margin:24px 0;">
+
+      <!-- Change Password -->
+      <div class="settings-block">
+        <h4
+          style="font-size:14px;font-weight:700;color:#0B0F14;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-key" style="color:#0EA5E9;"></i> Change Password
+        </h4>
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Current Password *</label>
+            <input type="password" id="currentPass" placeholder="Enter current password">
+          </div>
+          <div class="admin-form-group">
+            <label>New Password *</label>
+            <input type="password" id="newPass" placeholder="Min 6 characters">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column:1/-1;">
+            <label>Confirm New Password *</label>
+            <input type="password" id="confirmPass" placeholder="Retype new password">
+          </div>
+        </div>
+        <button class="admin-btn admin-btn-primary" onclick="changePassword()" id="passBtn">
+          <i class="fas fa-lock"></i> Update Password
+        </button>
+        <p id="passStatus" class="admin-status-msg"></p>
+      </div>
+    </div>
+
+    <!-- SECTION 2: CONTACT DETAILS -->
+    <div class="admin-card">
+      <h3><i class="fas fa-address-book"></i> Contact Details</h3>
+
+      <form id="contactForm">
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="mobileNumber" placeholder="+91 99408 82200" maxlength="15">
+          </div>
+          <div class="admin-form-group">
+            <label>WhatsApp Number *</label>
+            <input type="tel" id="whatsappNumber" placeholder="+91 99408 82200" maxlength="15">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Email Address *</label>
+            <input type="email" id="contactEmail" placeholder="muneestravels@gmail.com">
+          </div>
+          <div class="admin-form-group">
+            <label>Office Address *</label>
+            <input type="text" id="officeAddress" placeholder="Near Bus Stand, Virudhunagar">
+          </div>
+        </div>
+
+        <h4
+          style="font-size:14px;font-weight:700;color:#0B0F14;margin:20px 0 14px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-share-alt" style="color:#0EA5E9;"></i> Social Media Links
+        </h4>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label><i class="fab fa-instagram" style="color:#E4405F;"></i> Instagram URL</label>
+            <input type="url" id="instagramUrl" placeholder="https://instagram.com/muneestravels">
+          </div>
+          <div class="admin-form-group">
+            <label><i class="fab fa-facebook-f" style="color:#1877F2;"></i> Facebook URL</label>
+            <input type="url" id="facebookUrl" placeholder="https://facebook.com/muneestravels">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp Link</label>
+            <input type="url" id="whatsappUrl" placeholder="https://wa.me/919940882200">
+          </div>
+          <div class="admin-form-group">
+            <label><i class="fab fa-youtube" style="color:#FF0000;"></i> YouTube URL (optional)</label>
+            <input type="url" id="youtubeUrl" placeholder="https://youtube.com/@muneestravels">
+          </div>
+        </div>
+
+        <button type="submit" class="admin-btn admin-btn-primary" id="contactBtn">
+          <i class="fas fa-save"></i> Save Contact Details
+        </button>
+        <p id="contactStatus" class="admin-status-msg"></p>
+      </form>
+    </div>
+
+    <!-- SECTION 3: WEBSITE SETTINGS -->
+    <div class="admin-card">
+      <h3><i class="fas fa-globe"></i> Website Settings</h3>
+
+      <form id="siteForm">
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Website Name</label>
+            <input type="text" id="siteName" placeholder="Munees Travels">
+          </div>
+          <div class="admin-form-group">
+            <label>Tagline</label>
+            <input type="text" id="siteTagline" placeholder="Tours & Travels • Virudhunagar">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column:1/-1;">
+            <label>Footer Description</label>
+            <textarea id="footerDesc" placeholder="Trusted Tours & Travels company based in Virudhunagar..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="admin-btn admin-btn-primary" id="siteBtn">
+          <i class="fas fa-save"></i> Save Website Settings
+        </button>
+        <p id="siteStatus" class="admin-status-msg"></p>
+      </form>
+    </div>
+  </main>
+
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============ SIDEBAR ============ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSidebar(); });
+
+    /* ============ AUTH ============ */
+    auth.onAuthStateChanged((user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      document.getElementById("userEmail").textContent = user.email;
+      document.getElementById("currentEmail").textContent = user.email;
+      loadSettings();
+    });
+
+    function logout() {
+      if (confirm("Logout from admin panel?")) {
+        auth.signOut().then(() => window.location.href = "login.html");
+      }
+    }
+    window.logout = logout;
+
+    /* ============ CHANGE EMAIL ============ */
+    async function changeEmail() {
+      const newEmail = document.getElementById("newEmail").value.trim();
+      const status = document.getElementById("emailStatus");
+      const btn = document.getElementById("emailBtn");
+
+      if (!newEmail) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ Please enter a new email address.";
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ Invalid email format.";
+        return;
+      }
+
+      if (!confirm(`Change admin email to:\n\n${newEmail}\n\nYou will need to login again.`)) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+      status.textContent = "";
+
+      try {
+        const user = auth.currentUser;
+        await user.updateEmail(newEmail);
+        await db.collection("adminConfig").doc("account").set({
+          email: newEmail,
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+
+        status.style.color = "#16A34A";
+        status.textContent = "✅ Email updated! Please logout and login again.";
+        setTimeout(() => {
+          if (confirm("Email updated. Logout now?")) {
+            auth.signOut().then(() => window.location.href = "login.html");
+          }
+        }, 1500);
+      } catch (err) {
+        let msg = err.message;
+        if (err.code === "auth/requires-recent-login") msg = "Please logout and login again before changing email.";
+        else if (err.code === "auth/email-already-in-use") msg = "This email is already in use.";
+        status.style.color = "#DC2626";
+        status.textContent = "❌ " + msg;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Update Email';
+      }
+    }
+    window.changeEmail = changeEmail;
+
+    /* ============ CHANGE PASSWORD ============ */
+    async function changePassword() {
+      const currentPass = document.getElementById("currentPass").value;
+      const newPass = document.getElementById("newPass").value;
+      const confirmPass = document.getElementById("confirmPass").value;
+      const status = document.getElementById("passStatus");
+      const btn = document.getElementById("passBtn");
+
+      if (!currentPass || !newPass || !confirmPass) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ All fields are required.";
+        return;
+      }
+      if (newPass.length < 6) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ Password must be at least 6 characters.";
+        return;
+      }
+      if (newPass !== confirmPass) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ New passwords don't match.";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+      status.textContent = "";
+
+      try {
+        const user = auth.currentUser;
+        const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+        await user.reauthenticateWithCredential(cred);
+        await user.updatePassword(newPass);
+
+        status.style.color = "#16A34A";
+        status.textContent = "✅ Password updated successfully!";
+        document.getElementById("currentPass").value = "";
+        document.getElementById("newPass").value = "";
+        document.getElementById("confirmPass").value = "";
+      } catch (err) {
+        let msg = err.message;
+        if (err.code === "auth/wrong-password") msg = "Current password is incorrect.";
+        else if (err.code === "auth/weak-password") msg = "Password too weak (min 6 chars).";
+        status.style.color = "#DC2626";
+        status.textContent = "❌ " + msg;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-lock"></i> Update Password';
+      }
+    }
+    window.changePassword = changePassword;
+
+    /* ============ SAVE CONTACT ============ */
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("contactBtn");
+      const status = document.getElementById("contactStatus");
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      status.textContent = "";
+
+      const data = {
+        mobileNumber: document.getElementById("mobileNumber").value.trim(),
+        whatsappNumber: document.getElementById("whatsappNumber").value.trim(),
+        contactEmail: document.getElementById("contactEmail").value.trim(),
+        officeAddress: document.getElementById("officeAddress").value.trim(),
+        instagramUrl: document.getElementById("instagramUrl").value.trim(),
+        facebookUrl: document.getElementById("facebookUrl").value.trim(),
+        whatsappUrl: document.getElementById("whatsappUrl").value.trim(),
+        youtubeUrl: document.getElementById("youtubeUrl").value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        await db.collection("siteConfig").doc("contact").set(data, { merge: true });
+        status.style.color = "#16A34A";
+        status.textContent = "✅ Contact details saved!";
+      } catch (err) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ " + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Save Contact Details';
+      }
+    });
+
+    /* ============ SAVE SITE ============ */
+    document.getElementById("siteForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("siteBtn");
+      const status = document.getElementById("siteStatus");
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      status.textContent = "";
+
+      const data = {
+        siteName: document.getElementById("siteName").value.trim(),
+        siteTagline: document.getElementById("siteTagline").value.trim(),
+        footerDesc: document.getElementById("footerDesc").value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        await db.collection("siteConfig").doc("general").set(data, { merge: true });
+        status.style.color = "#16A34A";
+        status.textContent = "✅ Website settings saved!";
+      } catch (err) {
+        status.style.color = "#DC2626";
+        status.textContent = "❌ " + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Save Website Settings';
+      }
+    });
+
+    /* ============ LOAD SETTINGS ============ */
+    async function loadSettings() {
+      try {
+        const contactSnap = await db.collection("siteConfig").doc("contact").get();
+        if (contactSnap.exists) {
+          const d = contactSnap.data();
+          document.getElementById("mobileNumber").value = d.mobileNumber || "";
+          document.getElementById("whatsappNumber").value = d.whatsappNumber || "";
+          document.getElementById("contactEmail").value = d.contactEmail || "";
+          document.getElementById("officeAddress").value = d.officeAddress || "";
+          document.getElementById("instagramUrl").value = d.instagramUrl || "";
+          document.getElementById("facebookUrl").value = d.facebookUrl || "";
+          document.getElementById("whatsappUrl").value = d.whatsappUrl || "";
+          document.getElementById("youtubeUrl").value = d.youtubeUrl || "";
+        }
+
+        const generalSnap = await db.collection("siteConfig").doc("general").get();
+        if (generalSnap.exists) {
+          const d = generalSnap.data();
+          document.getElementById("siteName").value = d.siteName || "";
+          document.getElementById("siteTagline").value = d.siteTagline || "";
+          document.getElementById("footerDesc").value = d.footerDesc || "";
+        }
+      } catch (err) {
+        console.warn("Could not load settings:", err.message);
+      }
+    }
+
+    console.log("✅ Manage Settings loaded");
+  </script>
+</body>
+
+</html>

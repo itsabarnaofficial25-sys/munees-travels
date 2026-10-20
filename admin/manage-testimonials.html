@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Testimonials — Munees Travels Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="icon" type="image/png" href="../images/munees-travels-logo-removebg-preview.png">
+</head>
+
+<body>
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels"
+        onerror="this.style.display='none'">
+      <strong>Munees Admin</strong>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="sidebar-brand">
+      <img src="../images/munees-travels-logo-removebg-preview.png" alt="Munees Travels Logo" class="sidebar-logo"
+        onerror="this.style.display='none'">
+      <div class="sidebar-brand-text">
+        <strong>Munees Travels</strong>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <div class="user-email" id="userEmail">Loading...</div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      <a href="manage-gallery.html"><i class="fas fa-images"></i> <span>Gallery</span></a>
+      <a href="manage-vehicles.html"><i class="fas fa-car"></i> <span>Vehicles</span></a>
+      <a href="manage-packages.html"><i class="fas fa-box"></i> <span>Packages</span></a>
+      <a href="manage-testimonials.html" class="active"><i class="fas fa-quote-right"></i> <span>Testimonials</span></a>
+      <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a>
+      <a href="manage-enquiries.html"><i class="fas fa-envelope"></i> <span>Enquiries</span></a>
+      <a href="manage-settings.html"><i class="fas fa-envelope"></i> <span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-visit-link">
+        <i class="fas fa-globe"></i> <span>Visit Website</span>
+      </a>
+      <button class="sidebar-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+    <div class="admin-top-bar">
+      <h1><i class="fas fa-quote-right"></i> Manage Testimonials</h1>
+      <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <!-- ADD / EDIT FORM -->
+    <div class="admin-card">
+      <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Add Testimonial</h3>
+
+      <div class="edit-mode-banner" id="editBanner">
+        <i class="fas fa-pen"></i>
+        <span>Editing mode — updating existing testimonial</span>
+        <button onclick="cancelEdit()">Cancel Edit</button>
+      </div>
+
+      <form id="testiForm">
+        <input type="hidden" id="docId">
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Customer Name *</label>
+            <input type="text" id="name" required placeholder="e.g. Priya Nair">
+          </div>
+          <div class="admin-form-group">
+            <label>Role / Type *</label>
+            <input type="text" id="role" required placeholder="e.g. Family Traveller">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-group" style="grid-column:1/-1;">
+            <label>Review Text *</label>
+            <textarea id="text" required placeholder="Their experience..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="admin-btn admin-btn-primary" id="submitBtn">
+          <i class="fas fa-plus"></i> Add Testimonial
+        </button>
+        <p id="statusMsg" class="admin-status-msg"></p>
+      </form>
+    </div>
+
+    <h3 class="admin-section-title">Testimonials (<span id="count">0</span>)</h3>
+    <div class="admin-item-list" id="testiList">
+      <div class="admin-empty"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+  </main>
+
+  <!-- FIREBASE SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+
+  <script>
+    /* ============ MOBILE SIDEBAR ============ */
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const adminSidebar = document.getElementById("adminSidebar");
+
+    function openSidebar() {
+      adminSidebar?.classList.add("open");
+      sidebarBackdrop?.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      adminSidebar?.classList.remove("open");
+      sidebarBackdrop?.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    mobileMenuBtn?.addEventListener("click", openSidebar);
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    sidebarBackdrop?.addEventListener("click", closeSidebar);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSidebar(); });
+
+    /* ============ AUTH ============ */
+    auth.onAuthStateChanged((user) => {
+      if (!user) { window.location.href = "login.html"; return; }
+      const emailEl = document.getElementById("userEmail");
+      if (emailEl) emailEl.textContent = user.email;
+      loadTestis();
+    });
+
+    function logout() {
+      if (confirm("Logout from admin panel?")) {
+        auth.signOut().then(() => window.location.href = "login.html");
+      }
+    }
+    window.logout = logout;
+
+    /* ============ STATE ============ */
+    const form = document.getElementById("testiForm");
+    const statusMsg = document.getElementById("statusMsg");
+    const submitBtn = document.getElementById("submitBtn");
+    const list = document.getElementById("testiList");
+    const countEl = document.getElementById("count");
+    let allTestis = [];
+
+    /* ============ SUBMIT (ADD / UPDATE) ============ */
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      const editingId = document.getElementById("docId").value;
+      submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${editingId ? 'Updating' : 'Adding'}...`;
+      statusMsg.textContent = "";
+
+      try {
+        const now = new Date().toISOString();
+        const name = document.getElementById("name").value.trim();
+        const data = {
+          name: name,
+          role: document.getElementById("role").value.trim(),
+          text: document.getElementById("text").value.trim(),
+          avatar: name.charAt(0).toUpperCase(),
+          updatedAt: now
+        };
+
+        if (editingId) {
+          // UPDATE
+          await db.collection("testimonials").doc(editingId).update(data);
+          statusMsg.style.color = "#16A34A";
+          statusMsg.textContent = "✅ Testimonial updated!";
+        } else {
+          // ADD NEW
+          data.createdAt = now;
+          await db.collection("testimonials").add(data);
+          statusMsg.style.color = "#16A34A";
+          statusMsg.textContent = "✅ Testimonial added!";
+        }
+        resetForm();
+        loadTestis();
+      } catch (err) {
+        statusMsg.style.color = "#DC2626";
+        statusMsg.textContent = "❌ " + err.message;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    /* ============ RESET ============ */
+    function resetForm() {
+      form.reset();
+      document.getElementById("docId").value = "";
+      document.getElementById("formTitle").innerHTML = '<i class="fas fa-plus-circle"></i> Add Testimonial';
+      document.getElementById("editBanner").classList.remove("show");
+      submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Testimonial';
+    }
+
+    function cancelEdit() {
+      resetForm();
+      statusMsg.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    window.cancelEdit = cancelEdit;
+
+    /* ============ LOAD ============ */
+    async function loadTestis() {
+      try {
+        // ✅ Simple get — no orderBy (Firestore error avoid)
+        const snap = await db.collection("testimonials").get();
+        allTestis = [];
+        snap.forEach(doc => allTestis.push({ id: doc.id, ...doc.data() }));
+
+        // Sort by createdAt desc, fallback updatedAt
+        allTestis.sort((a, b) => {
+          const dateA = a.createdAt || a.updatedAt || '';
+          const dateB = b.createdAt || b.updatedAt || '';
+          return dateB.localeCompare(dateA);
+        });
+
+        countEl.textContent = allTestis.length;
+
+        if (!allTestis.length) {
+          list.innerHTML = `<div class="admin-empty" style="grid-column:1/-1;"><i class="fas fa-inbox"></i>No testimonials yet</div>`;
+          return;
+        }
+
+        list.innerHTML = "";
+        allTestis.forEach(d => {
+          list.innerHTML += `
+            <div class="admin-item">
+              <div class="admin-item-body">
+                <i class="fas fa-quote-right" style="font-size:22px;color:#0EA5E9;margin-bottom:14px;opacity:0.4;"></i>
+                <p style="font-size:14px;color:#0B0F14;line-height:1.7;margin-bottom:18px;font-style:italic;">"${d.text}"</p>
+                <div style="display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid #E7EBEF;">
+                  <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,#0369A1,#0EA5E9);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;">${d.avatar || d.name.charAt(0)}</div>
+                  <div>
+                    <h4 style="font-size:14.5px;color:#0B0F14;margin-bottom:2px;">${d.name}</h4>
+                    <span style="font-size:12.5px;color:#5B6472;">${d.role}</span>
+                  </div>
+                </div>
+                <div class="admin-item-actions" style="margin-top:14px;">
+                  <button class="btn-edit-inline" onclick="editTesti('${d.id}')">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button class="admin-btn-icon delete" onclick="del('${d.id}')" style="width:100%;height:auto;padding:9px;gap:6px;font-size:12px;font-weight:600;">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                </div>
+              </div>
+            </div>`;
+        });
+      } catch (err) {
+        console.error("Testimonials load error:", err);
+        list.innerHTML = `<div class="admin-empty" style="color:#DC2626;">
+          <i class="fas fa-exclamation-triangle"></i> Error: ${err.message}
+        </div>`;
+      }
+    }
+
+    /* ============ EDIT ============ */
+    function editTesti(id) {
+      const t = allTestis.find(x => x.id === id);
+      if (!t) return;
+
+      document.getElementById("docId").value = id;
+      document.getElementById("name").value = t.name || "";
+      document.getElementById("role").value = t.role || "";
+      document.getElementById("text").value = t.text || "";
+
+      document.getElementById("formTitle").innerHTML = '<i class="fas fa-pen"></i> Edit Testimonial';
+      document.getElementById("editBanner").classList.add("show");
+      submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Testimonial';
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    window.editTesti = editTesti;
+
+    /* ============ DELETE ============ */
+    async function del(id) {
+      if (!confirm("Delete this testimonial?")) return;
+      try {
+        await db.collection("testimonials").doc(id).delete();
+        loadTestis();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+    window.del = del;
+
+    console.log("✅ Manage Testimonials loaded (with edit)");
+  </script>
+</body>
+
+</html>
